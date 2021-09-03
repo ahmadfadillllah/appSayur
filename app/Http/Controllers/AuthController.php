@@ -21,7 +21,7 @@ class AuthController extends Controller
             return redirect()->route('home');
         }
 
-        return redirect()->route('login')->with('notification', 'Email / Password Salah');
+        return redirect()->route('login')->with('notifLogin', 'Email / Password Salah');
     }
 
     public function register()
@@ -31,13 +31,29 @@ class AuthController extends Controller
 
     public function processregister(Request $request)
     {
+
+        $request->validate([
+            'name' => ['required','string'],
+            'email' => ['required','email','unique:users,email'],
+            'password' => ['required','min:8','confirmed'],
+            ''
+        ],[
+            'name.required' => 'Nama Lengkap belum diisi!',
+            'email.required' => 'Email belum diisi!',
+            'email.unique' => 'Email sudah digunakan!',
+            'password.required' => 'Password belum diisi!',
+            'password.min' => 'Password minimal 8 karakter!',
+            'password.confirmed' => 'Password tidak sama!',
+        ]);
+
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->role = 'Seller';
         $user->save();
 
-        return redirect()->route('login')->with('notification', 'Berhasil Terdaftar');
+        return redirect()->route('login')->with('notifRegistration', 'Berhasil Terdaftar');
     }
 
     public function logout()

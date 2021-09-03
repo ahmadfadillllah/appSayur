@@ -31,9 +31,14 @@ Route::post('/processregister', 'AuthController@processregister')->name('process
 //Log Out
 Route::get('/logout', 'AuthController@logout')->name('logout');
 
-//Halaman Admin
-Route::get('/dashboard/home', 'AdminController@home')->name('home');
+
+Route::group(['middleware' => 'auth'], function(){
+    //Halaman Admin
+    Route::get('/dashboard/home', 'AdminController@home')->name('home');
+    Route::get('/dashboard/produk', 'AdminController@produk')->name('produk');
 
 
-//Halaman Profile
-Route::get('/dashboard/profile', 'ProfileController@profile')->name('profile');
+    //Halaman Profile
+    Route::get('/dashboard/profile', 'ProfileController@profile')->name('profile');
+});
+

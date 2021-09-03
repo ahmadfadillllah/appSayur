@@ -54,12 +54,18 @@
 							<!--begin::Input group-->
 							<div class="fv-row mb-7">
 								<label class="form-label fw-bolder text-dark fs-6">Full Name</label>
+                                @error('name')
+                                <div class="text-muted">{{ $message }}</div>
+                                @enderror
 								<input class="form-control form-control-lg form-control-solid" type="tezt" placeholder="" name="name" autocomplete="off" />
 							</div>
 							<!--end::Input group-->
 							<!--begin::Input group-->
 							<div class="fv-row mb-7">
 								<label class="form-label fw-bolder text-dark fs-6">Email</label>
+                                @error('email')
+                                <div class="text-muted">{{ $message }}</div>
+                                @enderror
 								<input class="form-control form-control-lg form-control-solid" type="email" placeholder="" name="email" autocomplete="off" />
 							</div>
 							<!--end::Input group-->
@@ -69,6 +75,9 @@
 								<div class="mb-1">
 									<!--begin::Label-->
 									<label class="form-label fw-bolder text-dark fs-6">Password</label>
+                                    @error('password')
+                                    <div class="text-muted">{{ $message }}</div>
+                                    @enderror
 									<!--end::Label-->
 									<!--begin::Input wrapper-->
 									<div class="position-relative mb-3">
@@ -97,7 +106,11 @@
 							<!--begin::Input group-->
 							<div class="fv-row mb-5">
 								<label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
-								<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="confirm-password" autocomplete="off" />
+                                @error('password_confirmation')
+                                <div class="text-muted">{{ $message }}</div>
+                                @enderror
+								<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="password_confirmation" autocomplete="off" />
+
 							</div>
 							<!--end::Input group-->
 							<!--begin::Input group-->

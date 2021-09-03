@@ -33,6 +33,34 @@
 					<!--begin::Wrapper-->
 					<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
 						<!--begin::Form-->
+                        @if (session('notifLogin'))
+                        <div class="alert alert-primary">
+                            <!--begin::Wrapper-->
+                            <div class="d-flex flex-column">
+                                <!--begin::Title-->
+                                <h4 class="mb-1 text-dark">Information!</h4>
+                                <!--end::Title-->
+                                <!--begin::Content-->
+                                <span>{{ session('notifLogin') }}</span>
+                                <!--end::Content-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        @endif
+                        @if (session('notifRegistration'))
+                        <div class="alert alert-primary">
+                            <!--begin::Wrapper-->
+                            <div class="d-flex flex-column">
+                                <!--begin::Title-->
+                                <h4 class="mb-1 text-dark">Information!</h4>
+                                <!--end::Title-->
+                                <!--begin::Content-->
+                                <span>{{ session('notifRegistration') }}</span>
+                                <!--end::Content-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        @endif
 						<form class="form w-100"  action="{{ route('processlogin') }}" method="POST">
                             {{ csrf_field() }}
 							<!--begin::Heading-->

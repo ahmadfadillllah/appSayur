@@ -33,6 +33,7 @@
         <!--end::Container-->
     </div>
     <!--end::Toolbar-->
+
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -40,25 +41,38 @@
             <!--begin::Row-->
             <div class="row gy-5 g-xl-8">
                 <!--begin::Col-->
+                @foreach ($dataProduk as $data)
                 <div class="col-xxl-4">
+                    @if (session('notifeditProduk'))
+                        <script>
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil diubah!',
+                            showConfirmButton: false,
+                            timer: 3000
+                            })
+                        </script>
+                    @endif
                     <!--begin::Mixed Widget 7-->
                     <div class="card-body p-9">
                         <!--begin::Heading-->
-                        <div class="fs-2hx fw-bolder">49</div>
-                        <div class="fs-4 fw-bold text-gray-400 mb-7">Metronic Clients</div>
+                        <div class="fs-2hx fw-bolder">{{ $data->name }}</div>
+                        <div class="fs-4 fw-bold text-gray-400 mb-7">Rp. {{ $data->price }}</div>
                         <!--end::Heading-->
                         <!--begin::Users group-->
-                        <div class="symbol-group symbol-hover mb-9">Gambar</div>
+                        <div class="symbol symbol-200px mb-5"><img src="{{ $data->getImage() }}" alt=""></div>
                         <!--end::Users group-->
                         <!--begin::Actions-->
                         <div class="d-flex">
-                            <a href="#" class="btn btn-primary btn-sm me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users">All Clients</a>
-                            <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">Invite New</a>
+                            <a href="/dashboard/produk/{{ $data->id }}/edit" class="btn btn-warning btn-sm me-3" >Ubah</a>
+                            <a href="#" class="btn btn-danger btn-sm">Hapus</a>
                         </div>
                         <!--end::Actions-->
                     </div>
                     <!--end::Mixed Widget 7-->
                 </div>
+                @endforeach
                 <!--end::Col-->
             </div>
             <!--end::Row-->
@@ -75,7 +89,8 @@
                         <!--begin::Modal content-->
                         <div class="modal-content">
                             <!--begin::Form-->
-                            <form class="form" action="#" id="kt_modal_add_event_form">
+                            <form class="form" action="{{ route('processProduk') }}" method="POST"
+                                id="kt_modal_add_event_form">
                                 <!--begin::Modal header-->
                                 <div class="modal-header">
                                     <!--begin::Modal title-->
@@ -440,7 +455,8 @@
                             <!--begin::Modal body-->
                             <div class="modal-body py-lg-10 px-lg-10">
                                 <!--begin::Stepper-->
-                                <form action="" method="post">
+                                <form action="{{ route('processProduk') }}" method="POST" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
                                         <label class="d-flex align-items-center fs-5 fw-bold mb-2">
@@ -516,6 +532,119 @@
                     </div>
                     <!--end::Modal dialog-->
                 </div>
+
+                <div class="modal fade" id="kt_modal_edit_app" tabindex="-1" aria-hidden="true">
+                    <!--begin::Modal dialog-->
+                    <div class="modal-dialog modal-dialog-centered mw-900px">
+                        <!--begin::Modal content-->
+                        <div class="modal-content">
+                            <!--begin::Modal header-->
+                            <div class="modal-header">
+                                <!--begin::Modal title-->
+                                <h2>Edit Produkmu...</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+                                            <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)"
+                                                fill="#000000">
+                                                <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                                <rect fill="#000000" opacity="0.5"
+                                                    transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)"
+                                                    x="0" y="7" width="16" height="2" rx="1" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-lg-10 px-lg-10">
+                                <!--begin::Stepper-->
+                                <form action="{{ route('processProduk') }}" method="POST" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Nama Produk</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Tidak dapat dikosongkan"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid"
+                                            name="name" placeholder="" value="{{ $data->name }}" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Price</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Tidak dapat dikosongkan"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid"
+                                            name="price" placeholder="" value="{{ $data->price }}" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Stock</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Tidak dapat dikosongkan"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="number" class="form-control form-control-lg form-control-solid"
+                                            name="stock" placeholder="" value="{{ $data->stock }}" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Upload Gambar</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Tidak dapat dikosongkan"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="file" class="form-control form-control-lg form-control-solid"
+                                            name="image" placeholder="" value="" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Deskripsi Produk</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Tidak dapat dikosongkan"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <textarea type="text" class="form-control form-control-lg form-control-solid"
+                                            name="description" value="{{ $data->description }}"></textarea>
+                                        <!--end::Input-->
+                                    </div>
+                                    <button class="btn btn-secondary" type="submit">Submit</button>
+                                </form>
+                                <!--end::Stepper-->
+                            </div>
+                            <!--end::Modal body-->
+                        </div>
+                        <!--end::Modal content-->
+                    </div>
+                    <!--end::Modal dialog-->
+                </div>
+
                 <!--end::Modal - Create App-->
             </div>
             <!--end::Row-->
@@ -525,4 +654,66 @@
     <!--end::Post-->
 </div>
 
+
+
 @endsection
+
+@push('script')
+
+<script>
+    $(document).ready(function () {
+
+        $.ajaxSetup({
+            headers: {
+                $ 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('body').on('click', '#submit', function (event) {
+            event.preventDefault()
+            var id = $("#id").val();
+            var name = $("#name").val();
+            var price = $("#price").val();
+            var description = $("#description").val();
+            var stock = $("#stock").val();
+
+            $.ajax({
+                url: 'dashboard/produk/' + id,
+                type: "POST",
+                data: {
+                    id: id,
+                    name: name,
+                    price: price,
+                    description: description,
+                    stock: stock,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    $('#companydata').trigger("reset");
+                    $('#practice_modal').modal('hide');
+                    window.location.reload(true);
+                }
+            });
+        });
+
+        $('body').on('click', '#editProduk', function (event) {
+
+            event.preventDefault();
+            var id = $(this).data('id');
+
+            $.get('dashboard/produk/' + id + '/edit', function (data) {
+                $('#practice_modal').modal('show');
+                $('#id').val(data.data.id);
+                $('#name').val(data.data.name);
+                $('#price').val(data.data.price);
+                $('#description').val(data.data.description);
+                $('#stock').val(data.data.stock);
+            })
+        });
+
+    });
+
+</script>
+
+@endpush

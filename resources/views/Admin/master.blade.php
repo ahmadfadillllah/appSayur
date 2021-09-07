@@ -22,6 +22,9 @@
     <link href="assets/plugins/global/plugins.dark.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/style.dark.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
+    <script src="{{ asset('sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('sweetalert2/dist/sweetalert2.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('sweetalert2/dist/sweetalert2.min.css') }}">
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -2468,12 +2471,12 @@
                                                     <!--end::Avatar-->
                                                     <!--begin::Username-->
                                                     <div class="d-flex flex-column">
-                                                        <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
+                                                        <div class="fw-bolder d-flex align-items-center fs-5">{{ Auth::user()->name }}
                                                             <span
-                                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span>
+                                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Basic</span>
                                                         </div>
                                                         <a href="#"
-                                                            class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                                            class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                                                     </div>
                                                     <!--end::Username-->
                                                 </div>

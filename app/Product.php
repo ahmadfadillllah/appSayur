@@ -16,4 +16,9 @@ class Product extends Model
         'stock',
         'image'
     ];
+
+    public function getImage()
+    {
+        return asset('img/'.$this->image);
+    }
 }

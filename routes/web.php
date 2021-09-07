@@ -35,8 +35,13 @@ Route::get('/logout', 'AuthController@logout')->name('logout');
 Route::group(['middleware' => 'auth'], function(){
     //Halaman Admin
     Route::get('/dashboard/home', 'AdminController@home')->name('home');
-    Route::get('/dashboard/produk', 'AdminController@produk')->name('produk');
 
+    //Halaman Produk
+    Route::get('/dashboard/produk', 'AdminController@produk')->name('produk');
+    Route::post('/dashboard/processproduk', 'AdminController@processproduk')->name('processProduk');
+
+    Route::get('/dashboard/produk/{id}/edit', 'AdminController@edit')->name('editProduk');
+    Route::post('/dashboard/produk/{id}', 'AdminController@update')->name('processEditProduk');
 
     //Halaman Profile
     Route::get('/dashboard/profile', 'ProfileController@profile')->name('profile');

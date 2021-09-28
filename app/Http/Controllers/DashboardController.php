@@ -52,12 +52,14 @@ class DashboardController extends Controller
             $latproduk = $array[0];
             $lonproduk = $array[1];
 
+
             $hasil = $this->distance((float)$lat, (float)$lon, (float)$latproduk, (float)$lonproduk, "K");
 
-            if($hasil > 400){
+            if(intval($hasil) < 5){
                 $match[] = $produk;
             }
         }
+
 
         return json_encode($match);
     }

@@ -12,7 +12,7 @@
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('admin/dist/assets') }}/css/style.bundle.css" rel="stylesheet" type="text/css" />
-        <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
+
         <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -192,57 +192,7 @@
 		<!--begin::Javascript-->
 		<!--begin::Global Javascript Bundle(used by all pages)-->
 
-        <script>
-                $.ajax({
-                type: "GET",
-                url: "{{ route('getLocation',[-2.5515, 120.3268]) }}",
-                cache: false,
-                success: function(data){
-                    //console.log(data);
-                    var dataProduk = document.getElementById("data");
-                    var object = JSON.parse(data);
-                    // console.log(object);
-
-                    if(object.length === 0){
-                        var notif = `<h4 class="fs-2hx text-dark mb-5" style="text-align:center" data-kt-scroll-offset="{default: 100, lg: 150}">Tidak ada Produk Disekitar mu!!</h4>`;
-                        $("#data").append(notif);
-                        return;
-                    }
-
-                    for(var i = 0; i < object.length; i++){
-                        // console.log(object[i]);
-
-                        var card = `<div class="col-md-4 px-5">
-							<!--begin::Story-->
-							<div class="text-center mb-10 mb-md-0">
-								<!--begin::Illustration-->
-								<img src="{{ asset('img') }}/${object[i].image}" class="mh-200px mb-9" alt="" />
-								<!--end::Illustration-->
-								<!--begin::Heading-->
-								<div class="d-flex flex-center mb-5">
-									<!--begin::Badge-->
-									<span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3"></span>
-									<!--end::Badge-->
-									<!--begin::Title-->
-									<div class="fs-5 fs-lg-3 fw-bolder text-dark">${object[i].name}</div>
-									<!--end::Title-->
-								</div>
-								<!--end::Heading-->
-								<!--begin::Description-->
-								<div class="fw-bold fs-6 fs-lg-4 text-muted">${object[i].price}</div>
-                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app" id="kt_toolbar_primary_button">Beli</a>
-                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app" id="kt_toolbar_primary_button">Lihat</a>
-								<!--end::Description-->
-							</div>
-							<!--end::Story-->
-						</div>`;
-                        $("#data").append(card);
-                    }
-                }
-                });
-
-        </script>
-
+        <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
 		<script src="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.js"></script>
 		<script src="{{ asset('admin/dist/assets') }}/js/scripts.bundle.js"></script>
 		<!--end::Global Javascript Bundle-->

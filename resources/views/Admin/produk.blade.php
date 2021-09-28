@@ -42,7 +42,7 @@
             <div class="row gy-5 g-xl-8">
                 <!--begin::Col-->
                 @foreach ($dataProduk as $data)
-                <div class="col-xxl-4">
+                <div class="col-md-4">
                     @if (session('notifeditProduk'))
                         <script>
                             Swal.fire({
@@ -53,23 +53,35 @@
                             timer: 3000
                             })
                         </script>
+                    @elseif (session('notifdeleteProduk'))
+                    <script>
+                        Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Data Berhasil dihapus!',
+                        showConfirmButton: false,
+                        timer: 3000
+                        })
+                    </script>
                     @endif
                     <!--begin::Mixed Widget 7-->
-                    <div class="card-body p-9">
-                        <!--begin::Heading-->
-                        <div class="fs-2hx fw-bolder">{{ $data->name }}</div>
-                        <div class="fs-4 fw-bold text-gray-400 mb-7">Rp. {{ $data->price }}</div>
-                        <!--end::Heading-->
-                        <!--begin::Users group-->
-                        <div class="symbol symbol-200px mb-5"><img src="{{ $data->getImage() }}" alt=""></div>
-                        <!--end::Users group-->
-                        <!--begin::Actions-->
-                        <div class="d-flex">
-                            <a href="/dashboard/produk/{{ $data->id }}/edit" class="btn btn-warning btn-sm me-3" >Ubah</a>
-                            <a href="#" class="btn btn-danger btn-sm">Hapus</a>
-                        </div>
-                        <!--end::Actions-->
+
+                        <div class="card-body p-7">
+                            <!--begin::Heading-->
+                            <div class="fs-2hx fw-bolder">{{ $data->name }}</div>
+                            <div class="fs-4 fw-bold text-gray-400 mb-7">Rp. {{ $data->price }}</div>
+                            <!--end::Heading-->
+                            <!--begin::Users group-->
+                            <div class="symbol symbol-200px mb-5"><img src="{{ $data->getImage() }}" alt=""></div>
+                            <!--end::Users group-->
+                            <!--begin::Actions-->
+                            <div class="d-flex">
+                                <a href="/dashboard/produk/{{ $data->id }}/edit" class="btn btn-warning btn-sm me-3" >Ubah</a>
+                                <a href="/dashboard/produk/{{ $data->id }}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus ?')">Hapus</a>
+                            </div>
+                            <!--end::Actions-->
                     </div>
+
                     <!--end::Mixed Widget 7-->
                 </div>
                 @endforeach
@@ -498,11 +510,15 @@
                                     </div>
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
-
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Your Location</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Tidak dapat dikosongkan"></i>
+                                        </label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            name="location" placeholder="" id="location" hidden/>
+                                            name="location" placeholder="" id="location" readonly/>
                                         <!--end::Input-->
                                     </div>
                                     <div class="fv-row mb-10">

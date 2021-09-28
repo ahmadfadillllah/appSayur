@@ -12,7 +12,7 @@
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('admin/dist/assets') }}/css/style.bundle.css" rel="stylesheet" type="text/css" />
-        <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
+
         <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -560,7 +560,7 @@
 		<!--end::Main-->
 		<!--begin::Javascript-->
 		<!--begin::Global Javascript Bundle(used by all pages)-->
-
+        <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
         <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
 		<script src="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.js"></script>
 		<script src="{{ asset('admin/dist/assets') }}/js/scripts.bundle.js"></script>

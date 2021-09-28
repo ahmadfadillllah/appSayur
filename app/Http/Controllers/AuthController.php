@@ -60,6 +60,6 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('dashbaord');
+        return redirect()->route('dashboard');
     }
 }

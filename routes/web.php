@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/dashboard/produk/{id}/edit', 'AdminController@edit')->name('editProduk');
     Route::post('/dashboard/produk/{id}', 'AdminController@update')->name('processEditProduk');
 
+    Route::get('/dashboard/produk/{id}/delete', 'AdminController@delete')->name('processDeleteProduk');
+
     //Halaman Profile
     Route::get('/dashboard/profile', 'ProfileController@profile')->name('profile');
 });

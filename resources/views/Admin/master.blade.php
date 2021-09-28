@@ -132,7 +132,7 @@
                                     <span class="menu-title">Produk</span>
                                 </a>
                             </div>
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotone/Communication/Group.svg-->
@@ -207,7 +207,7 @@
                                     </span>
                                     <span class="menu-title">Laporan</span>
                                 </a>
-                            </div>
+                            </div> --}}
                             <div class="menu-item">
                                 <div class="menu-content pt-8 pb-2">
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">Pages</span>
@@ -353,7 +353,7 @@
                                                 <span class="menu-title">Produk</span>
                                             </a>
                                         </div>
-                                        <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
+                                        {{-- <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                                             class="menu-item menu-lg-down-accordion me-lg-1">
                                             <span class="menu-link py-3">
                                                 <span class="menu-title">Customers</span>
@@ -433,7 +433,7 @@
                                             <a class="menu-link py-3" href="{{ route('home') }}">
                                                 <span class="menu-title">Laporan</span>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <!--end::Menu-->
                                 </div>

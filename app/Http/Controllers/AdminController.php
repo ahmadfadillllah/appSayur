@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     public function produk()
     {
-        $dataProduk = Product::all();
+        $dataProduk = Product::where(['user_id' => Auth::user()->id])->get();
         return view('Admin.produk', ['dataProduk' => $dataProduk]);
     }
 
@@ -59,5 +59,12 @@ class AdminController extends Controller
         $produk->update($request->all());
 
         return redirect()->route('produk')->with('notifeditProduk', 'Data Berhasil diubah!');
+    }
+
+    public function delete($id)
+    {
+        $produk = Product::find($id);
+        $produk->delete($produk);
+        return redirect()->route('produk')->with('notifdeleteProduk', 'Data Berhasil dihapus!');
     }
 }

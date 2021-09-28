@@ -498,6 +498,15 @@
                                     </div>
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
+
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid"
+                                            name="location" placeholder="" id="location" hidden/>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
                                         <label class="d-flex align-items-center fs-5 fw-bold mb-2">
                                             <span class="required">Upload Gambar</span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
@@ -506,7 +515,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="file" class="form-control form-control-lg form-control-solid"
-                                            name="image" placeholder="" value="" />
+                                            name="image" placeholder="" />
                                         <!--end::Input-->
                                     </div>
                                     <div class="fv-row mb-10">
@@ -579,7 +588,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            name="name" placeholder="" value="{{ $data->name }}" />
+                                            name="name" placeholder=""/>
                                         <!--end::Input-->
                                     </div>
                                     <div class="fv-row mb-10">
@@ -592,7 +601,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            name="price" placeholder="" value="{{ $data->price }}" />
+                                            name="price" placeholder="" />
                                         <!--end::Input-->
                                     </div>
                                     <div class="fv-row mb-10">
@@ -605,7 +614,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="number" class="form-control form-control-lg form-control-solid"
-                                            name="stock" placeholder="" value="{{ $data->stock }}" />
+                                            name="stock" placeholder="" />
                                         <!--end::Input-->
                                     </div>
                                     <div class="fv-row mb-10">
@@ -631,7 +640,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <textarea type="text" class="form-control form-control-lg form-control-solid"
-                                            name="description" value="{{ $data->description }}"></textarea>
+                                            name="description"></textarea>
                                         <!--end::Input-->
                                     </div>
                                     <button class="btn btn-secondary" type="submit">Submit</button>
@@ -659,6 +668,8 @@
 @endsection
 
 @push('script')
+
+
 
 <script>
     $(document).ready(function () {

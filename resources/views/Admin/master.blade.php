@@ -239,7 +239,7 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
-                                        <a class="menu-link" href="../../demo1/dist/account/overview.html">
+                                        <a class="menu-link" href="{{ route('profile') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -2487,7 +2487,7 @@
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-5 my-1">
-                                                <a href="../../demo1/dist/account/settings.html"
+                                                <a href="{{ route('profile') }}"
                                                     class="menu-link px-5">Account Settings</a>
                                             </div>
                                             <!--end::Menu item-->
@@ -5004,6 +5004,23 @@
     </div>
     <!--end::Scrolltop-->
     <!--end::Main-->
+
+    <script>
+        getLocation();
+
+        function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+        }
+
+        function showPosition(position) {
+            var l = document.getElementById('location');
+            l.value = position.coords.latitude + "|" + position.coords.longitude;
+        }
+    </script>
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.js"></script>

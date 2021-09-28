@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function processproduk(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
 
         $produk = new Product();
         $produk->user_id = Auth::user()->id;
@@ -30,7 +30,9 @@ class AdminController extends Controller
         $produk->price = $request->price;
         $produk->description = $request->description;
         $produk->stock = $request->stock;
+        $produk->location = $request->location;
         $file = $request->file('image');
+
 
         $nama_file = $file->getClientOriginalName();
 

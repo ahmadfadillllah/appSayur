@@ -17,7 +17,9 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/', 'DashboardController@index')->name('dashbaord');
+Route::get('/', 'DashboardController@index')->name('dashboard');
+Route::get('/product', 'DashboardController@product')->name('product');
+Route::get('/getLocation/{lat}/{lon}', 'DashboardController@getLocation')->name('getLocation');
 
 //Login
 Route::get('/login', 'AuthController@login')->name('login');

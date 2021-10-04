@@ -46,8 +46,8 @@
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a href="javascript:void(0);">
-                        <h1><span style="background: linear-gradient(to right, #12CE5D 0%, #FFD80C 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
-                            <span id="kt_landing_hero_text">Sayur-sayuran</span>
+                        <h1><span style="background: linear-gradient(to right, #12CE5D 0%, #FFD80C 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent; text-align:center">
+                            <span id="kt_landing_hero_text">Sayol</span>
                         </span></h1>
                     </a>
                     <!--end::Logo-->
@@ -2568,7 +2568,7 @@
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">2021©</span>
                             <a href="javascript:void(0);" target="_blank"
-                                class="text-gray-800 text-hover-primary">Sayur-sayuran</a>
+                                class="text-gray-800 text-hover-primary">Sayol</a>
                         </div>
                         <!--end::Copyright-->
                         <!--begin::Menu-->

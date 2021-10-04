@@ -485,7 +485,7 @@
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
                                         <label class="d-flex align-items-center fs-5 fw-bold mb-2">
-                                            <span class="required">Price</span>
+                                            <span class="required">Harga</span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                                 title="Tidak dapat dikosongkan"></i>
                                         </label>

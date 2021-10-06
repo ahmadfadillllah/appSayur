@@ -66,11 +66,11 @@
 							<!--begin::Heading-->
 							<div class="text-center mb-10">
 								<!--begin::Title-->
-								<h1 class="text-dark mb-3">Sign In</h1>
+								<h1 class="text-dark mb-3">Masuk</h1>
 								<!--end::Title-->
 								<!--begin::Link-->
-								<div class="text-gray-400 fw-bold fs-4">New Here?
-								<a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a></div>
+								<div class="text-gray-400 fw-bold fs-4">Belum punya akun?
+								<a href="{{ route('register') }}" class="link-primary fw-bolder">Buat Akun</a></div>
 								<!--end::Link-->
 							</div>
 							<!--begin::Heading-->
@@ -105,7 +105,7 @@
 							<div class="text-center">
 								<!--begin::Submit button-->
 								<button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-									<span class="indicator-label">Continue</span>
+									<span class="indicator-label">Lanjut</span>
 									<span class="indicator-progress">Please wait...
 									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 								</button>

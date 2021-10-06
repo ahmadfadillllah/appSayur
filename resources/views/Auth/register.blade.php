@@ -36,11 +36,11 @@
 							<!--begin::Heading-->
 							<div class="mb-10 text-center">
 								<!--begin::Title-->
-								<h1 class="text-dark mb-3">Create an Account</h1>
+								<h1 class="text-dark mb-3">Buat Akun</h1>
 								<!--end::Title-->
 								<!--begin::Link-->
-								<div class="text-gray-400 fw-bold fs-4">Already have an account?
-								<a href="{{ route('login') }}" class="link-primary fw-bolder">Sign in here</a></div>
+								<div class="text-gray-400 fw-bold fs-4">Sudah punya akun?
+								<a href="{{ route('login') }}" class="link-primary fw-bolder">Masuk</a></div>
 								<!--end::Link-->
 							</div>
 							<!--end::Heading-->
@@ -53,7 +53,7 @@
 							<!--end::Separator-->
 							<!--begin::Input group-->
 							<div class="fv-row mb-7">
-								<label class="form-label fw-bolder text-dark fs-6">Full Name</label>
+								<label class="form-label fw-bolder text-dark fs-6">Nama Lengkap</label>
                                 @error('name')
                                 <div class="text-muted">{{ $message }}</div>
                                 @enderror

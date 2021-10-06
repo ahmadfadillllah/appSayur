@@ -92,7 +92,8 @@
 								<!--end::Menu wrapper-->
 								<!--begin::Toolbar-->
 								<div class="flex-equal text-end ms-1">
-									<a href="{{ route('register') }}" class="btn btn-success">Buka Toko</a>
+									<a href="{{ route('login') }}" class="btn btn-secondary">Masuk</a> &nbsp;&nbsp;&nbsp;
+									<a href="{{ route('register') }}" class="btn btn-success">Daftar</a>
 								</div>
 								<!--end::Toolbar-->
 							</div>

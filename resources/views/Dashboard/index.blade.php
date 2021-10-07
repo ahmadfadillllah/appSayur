@@ -75,7 +75,7 @@
 											<!--begin::Menu item-->
 											<div class="menu-item">
 												<!--begin::Menu link-->
-												<a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#list-sayur" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Sayuran</a>
+												<a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ route('product') }}" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Produk Terdekat</a>
 												<!--end::Menu link-->
 											</div>
 											<!--end::Menu item-->
@@ -114,7 +114,7 @@
 							</span></h1>
 							<!--end::Title-->
 							<!--begin::Action-->
-							<a href="{{ route('product') }}" onclick="getLocation()" class="btn btn-primary" >Cari Pasar Terdekat</a>
+							{{-- <a href="{{ route('product') }}" onclick="getLocation()" class="btn btn-primary" >Cari Pasar Terdekat</a> --}}
 							<!--end::Action-->
 						</div>
 						<!--end::Heading-->

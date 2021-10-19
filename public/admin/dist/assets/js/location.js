@@ -45,11 +45,17 @@ function showPositionCustomer(position) {
             for(var i = 0; i < object.length; i++){
                 // console.log(object[i]);
 
+                let reg = new RegExp(/^(ftp|http|https):\/\/[^ "]+$/);
+                let image = object[i].image;
+
+                if(!reg.test(image))
+                    image = `http://127.0.0.1:8000/img/${object[i].image}`;
+
                 var card = `<div class="col-md-4 px-5">
                     <!--begin::Story-->
                     <div class="text-center mb-10 mb-md-0">
                         <!--begin::Illustration-->
-                        <img src="http://127.0.0.1:8000/img/${object[i].image}" class="mh-200px mb-9" alt="" />
+                        <img src="${image}" class="mh-200px mb-9" alt="" />
                         <!--end::Illustration-->
                         <!--begin::Heading-->
                         <div class="d-flex flex-center mb-5">
@@ -69,6 +75,7 @@ function showPositionCustomer(position) {
                     </div>
                     <!--end::Story-->
                 </div>`;
+
                 $("#data").append(card);
             }
         }

@@ -33,7 +33,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'user_id'  =>  $user->id,
         'description'   =>  $faker->sentence,
         'stock' =>  rand(0, 30),
-        'location' => 'makassar',
+        'location' => '0.642232|122.82399699999999',
         'image' =>  $faker->imageUrl(),
     ];
 });

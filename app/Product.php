@@ -20,6 +20,7 @@ class Product extends Model
 
     public function getImage()
     {
+        // cek jika gambar berupa url maka kembalikan saja gambar itu
         if($this->isImageURL()) {
             return $this->image;
         }

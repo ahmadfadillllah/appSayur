@@ -20,6 +20,26 @@ class Product extends Model
 
     public function getImage()
     {
-        return asset('img/'.$this->image);
+        if($this->isImageURL()) {
+            return $this->image;
+        }
+
+        return asset('img/' . $this->image);
+    }
+
+    /**
+     *  Metode untuk mengecek apakah gambar produk itu berupa url atau tidak
+     *
+     *  @return bool
+     */
+    private function isImageURL(): bool
+    {
+        $url    =   $this->image;
+
+        // Remove all illegal characters from a url
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+
+        // Validate url
+        return (filter_var($url, FILTER_VALIDATE_URL) !== false) ? true : false;
     }
 }

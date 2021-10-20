@@ -14,10 +14,22 @@
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet"
         type="text/css" />
+
     <link href="{{ asset('admin/dist/assets') }}/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer>
+    </script>
+
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -147,7 +159,27 @@
 
                 {{-- begin::content --}}
 
-                <div>test</div>
+                <div class="row">
+
+                    <div class="col-md-5">
+                        <div class="card text-dark bg-light mb-2 mt-2">
+                            <div class="card-body p-3">
+                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart" style="font-size: 20px"></i> Detail pesanan</h3>
+                                <hr class="mt-3">
+
+                                <div class="alert alert-info">
+                                    <img src="https://dummyimage.com/600x400/6b4e4e/b9befa.jpg&text=Test" alt="img" width="100px">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+
+                    </div>
+
+                </div>
 
                 {{-- end::content --}}
 

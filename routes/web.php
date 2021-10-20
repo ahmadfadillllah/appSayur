@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +15,13 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/product', 'DashboardController@product')->name('product');
+Route::get('/product/detail/{id}', 'DashboardController@showProduct')->name('product.detail');
+Route::get('/product/transaksi/{id}', 'DashboardController@tranksaksi')->name('product.tranksaksi');
 Route::get('/getLocation/{lat}/{lon}', 'DashboardController@getLocation')->name('getLocation');
 
 //Login
 Route::get('/login', 'AuthController@login')->name('login');
 Route::post('/processlogin', 'AuthController@processlogin')->name('processlogin');
-
 
 //Register
 Route::get('/register', 'AuthController@register')->name('register');
@@ -32,7 +29,6 @@ Route::post('/processregister', 'AuthController@processregister')->name('process
 
 //Log Out
 Route::get('/logout', 'AuthController@logout')->name('logout');
-
 
 Route::group(['middleware' => 'auth'], function(){
     //Halaman Admin

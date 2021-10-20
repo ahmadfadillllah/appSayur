@@ -21,9 +21,18 @@ class DashboardController extends Controller
         return view('Dashboard.product', ['dataProduk' => $dataProduk]);
     }
 
+    public function showProduct()
+    {
+        dd('test');
+    }
+
+    public function tranksaksi()
+    {
+        // return view();
+    }
+
     public function distance($lat1, $lon1, $lat2, $lon2, $unit)
     {
-
         $theta = $lon1 - $lon2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
         $dist = acos($dist);
@@ -47,7 +56,7 @@ class DashboardController extends Controller
 
         $dataProduk = Product::all();
 
-        $match = [];
+        $products = [];
 
         foreach ($dataProduk as $produk) {
             $array = explode("|", $produk->location);
@@ -58,11 +67,10 @@ class DashboardController extends Controller
             $hasil = $this->distance((float)$lat, (float)$lon, (float)$latproduk, (float)$lonproduk, "K");
 
             if (intval($hasil) < 5) {
-                $match[] = $produk;
+                $products[] = $produk;
             }
         }
 
-
-        return json_encode($match);
+        return view('dashboard.product-card', compact('products'));
     }
 }

@@ -26,9 +26,15 @@ class DashboardController extends Controller
         dd('test');
     }
 
-    public function tranksaksi()
+    public function checkout(string $id)
     {
-        // return view();
+        $product = Product::find($id);
+
+        if(!$product) redirect()->back();
+
+        if(($product instanceof Product) === false) redirect()->back();
+
+        return view('Dashboard.product-checkout', compact($product));
     }
 
     public function distance($lat1, $lon1, $lat2, $lon2, $unit)

@@ -4,7 +4,7 @@
 
 <head>
     <base href="">
-    <title>Dashboard</title>
+    <title>Checkout Produk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
@@ -144,24 +144,13 @@
         <div class="mb-n10 mb-lg-n20 z-index-2">
             <!--begin::Container-->
             <div class="container">
-                <!--begin::Heading-->
-                <div class="text-center mb-17">
-                    <!--begin::Title-->
-                    <h3 class="fs-2hx text-dark mb-5" id="list-sayur" data-kt-scroll-offset="{default: 100, lg: 150}">
-                        Daftar Sayur</h3>
-                    <!--end::Title-->
-                    <!--begin::Text-->
-                    <div class="fs-5 text-muted fw-bold">Daftar Penjual sayur terdekat anda!</div>
-                    <!--end::Text-->
-                </div>
-                <!--end::Heading-->
-                <!--begin::Row-->
-                <div class="row w-100 gy-10 mb-md-20" id="data">
 
-                    {{-- Card gonna be here --}}
+                {{-- begin::content --}}
 
-                </div>
-                <!--end::Row-->
+                <div>test</div>
+
+                {{-- end::content --}}
+
                 <!--begin::Product slider-->
                 <div class="tns tns-default">
                     <!--begin::Slider button-->

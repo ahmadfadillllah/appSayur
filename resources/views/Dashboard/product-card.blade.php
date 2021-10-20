@@ -17,8 +17,13 @@
             <!--end::Heading-->
             <!--begin::Description-->
             <div class="fw-bold fs-6 fs-lg-4 text-muted">{{ $product->price }}</div>
-            <a href="#" class="btn btn-sm btn-primary">Beli</a>
-            <a href="{{ route('product.tranksaksi', $product->id) }}" class="btn btn-sm btn-primary">Lihat</a>
+            @auth
+                <a href="{{ route('product.checkout', $product->id) }}" class="btn btn-sm btn-primary">Beli</a>
+                <a href="{{ route('product.detail', $product->id) }}" class="btn btn-sm btn-primary">Lihat</a>
+            @else
+                <button type="button" class="btn btn-sm btn-secondary disabled" disabled>Beli</button>
+                <a href="{{ route('product.detail', $product->id) }}" class="btn btn-sm btn-primary">Lihat</a>
+            @endauth
             <!--end::Description-->
         </div>
         <!--end::Story-->

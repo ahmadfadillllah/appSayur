@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/product', 'DashboardController@product')->name('product');
 Route::get('/product/detail/{id}', 'DashboardController@showProduct')->name('product.detail');
-Route::get('/product/transaksi/{id}', 'DashboardController@tranksaksi')->name('product.tranksaksi');
+Route::middleware('auth')->get('/product/checkout/{product:id}', 'DashboardController@checkout')->name('product.checkout');
 Route::get('/getLocation/{lat}/{lon}', 'DashboardController@getLocation')->name('getLocation');
 
 //Login

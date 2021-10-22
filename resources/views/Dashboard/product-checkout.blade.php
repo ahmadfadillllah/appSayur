@@ -4,7 +4,7 @@
 
 <head>
     <base href="">
-    <title>Checkout Produk</title>
+    <title>Checkout Produk - {{ $product->name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
@@ -17,10 +17,14 @@
 
     <link href="{{ asset('admin/dist/assets') }}/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
+        integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -164,19 +168,124 @@
                     <div class="col-md-5">
                         <div class="card text-dark bg-light mb-2 mt-2">
                             <div class="card-body p-3">
-                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart" style="font-size: 20px"></i> Detail pesanan</h3>
+                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart"
+                                        style="font-size: 20px"></i> Detail pesanan</h3>
                                 <hr class="mt-3">
 
-                                <div class="alert alert-info">
-                                    <img src="https://dummyimage.com/600x400/6b4e4e/b9befa.jpg&text=Test" alt="img" width="100px">
+                                <div class="cart-products">
+                                    <div class="card-product">
+                                        <img src="{{ $product->getImage() }}" alt="img" width="100px">
+                                        <div class="card-info">
+                                            <div>
+                                                <h5>{{ $product->name }}</h5>
+                                                <h6>Stock {{ $product->stock }}</h6>
+                                                <h6>QTY {{ $qty }}</h6>
+                                            </div>
+                                            <div>
+                                                <b>RP. {{ $product->price }}</b>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="mt-2 d-flex justify-content-between px-2">
+                                    <h5>Barang(x{{ $qty }})</h5>
+                                    <b>RP. {{ $product->price * $qty }}</b>
+                                </div>
+
+                                <div class="mt-2 d-flex justify-content-between px-2">
+                                    <h5>Onkos kirim</h5>
+                                    <b>RP. {{ $onkir }}</b>
+                                </div>
+
+                                <hr class="mt-2">
+
+                                <div class="d-flex justify-content-between px-2">
+                                    <h5>Total</h5>
+                                    <b>RP. {{ ($product->price * $qty) + $onkir }}</b>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card text-dark bg-light mb-2 mt-4">
+                            <div class="card-body p-3">
+                                <form class="row" method="GET" action="{{route('product.checkout', [$product->id, $lat, $lon]) }}">
+                                    <div class="col-9">
+                                        <input type="number" class="form-control w-100" id="qty" name="qty" placeholder="QTY" value="{{ $qty }}">
+                                    </div>
+                                    <div class="col-3">
+                                        <button type="submit" class="btn btn-primary btn-sm btn-block">Update</button>
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-7">
+                        <div class="card text-dark bg-light mb-2 mt-2">
+                            <div class="card-body p-3">
+                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-user"
+                                        style="font-size: 20px"></i> Info pembeli</h3>
+                                <hr class="mt-3">
 
+                                <form method="POST" action="{{ route('product.checkout.beli') }}">
+                                    @method('POST')
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="qty" value="{{ $qty }}">
+                                    <input type="hidden" name="onkir" value="{{ $onkir }}">
+                                    <input type="hidden" name="total_harga" value="{{ ($product->price * $qty) + $onkir }}">
+                                    <div class="mb-3">
+                                        <label for="nama" class="form-label">Nama Lenkpap</label>
+                                        <input type="text" class="form-control" id="nama" name="nama">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="noxtel" class="form-label">Nomor telpone</label>
+                                        <input type="text" class="form-control" id="noxtel" name="nox">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" disabled
+                                            value="{{ $user->email }}">
+                                        <div class="form-text d-none">Lorem, ipsum dolor.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="alamat" class="form-label">Alamat</label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="latlon" class="form-label">Latitude and longitude</label>
+                                        <input type="text" class="form-control" id="latlon"
+                                            value="{{ "@$lat,$lon" }}" disabled>
+                                    </div>
+
+                                    <div class="mb-3 d-none">
+                                        <div class="form-label">Metode pembayaran</div>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected value="">Pilih metode pembayaran</option>
+                                            <option value="COD">COD</option>
+                                            <option value="Ovo">Ovo</option>
+                                            <option value="Gopay">Gopay</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="note" class="form-label">Catatan</label>
+                                        <textarea class="form-control" id="note" rows="3"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        Checkout
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
 
                 </div>

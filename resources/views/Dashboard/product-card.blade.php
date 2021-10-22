@@ -18,7 +18,7 @@
             <!--begin::Description-->
             <div class="fw-bold fs-6 fs-lg-4 text-muted">{{ $product->price }}</div>
             @auth
-                <a href="{{ route('product.checkout', $product->id) }}" class="btn btn-sm btn-primary">Beli</a>
+                <a href="{{ route('product.checkout', [$product->id, $laty, $lony]) }}?qty=1" class="btn btn-sm btn-primary">Beli</a>
                 <a href="{{ route('product.detail', $product->id) }}" class="btn btn-sm btn-primary">Lihat</a>
             @else
                 <button type="button" class="btn btn-sm btn-secondary disabled" disabled>Beli</button>

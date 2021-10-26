@@ -20,9 +20,11 @@ Route::get('/product/detail/{id}', 'DashboardController@showProduct')->name('pro
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/product/checkout/{id}/{lat}/{lot}', 'DashboardController@checkoutPage')->name('product.checkout');
+    Route::get('/product/order/{id}/{lat}/{lot}', 'DashboardController@checkoutPage')->name('product.checkout');
 
     Route::post('/product/checkout', 'DashboardController@checkout')->name('product.checkout.beli');
+
+    Route::get('/product/pay/{id}/{token}', 'DashboardController@productPay')->name('product.pay');
 
 });
 

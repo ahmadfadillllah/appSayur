@@ -12,7 +12,6 @@ function showPosition(position) {
     console.log(loc1.value);
 }
 
-getLocationCustomer();
 
 function getLocationCustomer() {
     if (navigator.geolocation) {
@@ -35,3 +34,5 @@ function showPositionCustomer(position) {
     });
     return loc1;
 }
+
+getLocationCustomer();

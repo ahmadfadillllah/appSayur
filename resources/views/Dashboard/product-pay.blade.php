@@ -4,7 +4,7 @@
 
 <head>
     <base href="">
-    <title>Checkout Produk - {{ $product->name }}</title>
+    <title>User checkouts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
@@ -35,6 +35,10 @@
     </script>
 
 
+    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-YCHtULs46ydSA7tV"></script>
+    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
 
     <!--end::Global Stylesheets Bundle-->
 </head>
@@ -171,7 +175,9 @@
                         <div class="card text-dark bg-light mb-2 mt-2">
                             <div class="card-body p-3">
                                 <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart"
-                                        style="font-size: 20px"></i> Detail pesanan</h3>
+                                        style="font-size: 20px"></i> Detail Pesanan
+
+                                </h3>
                                 <hr class="mt-3">
 
                                 <div class="cart-products">
@@ -181,7 +187,7 @@
                                             <div>
                                                 <h5>{{ $product->name }}</h5>
                                                 <h6>Stock {{ $product->stock }}</h6>
-                                                <h6>QTY {{ $qty }}</h6>
+                                                <h6>QTY {{ $checkout->qty }}</h6>
                                             </div>
                                             <div>
                                                 <b>RP. {{ $product->price }}</b>
@@ -191,36 +197,21 @@
                                 </div>
 
                                 <div class="mt-2 d-flex justify-content-between px-2">
-                                    <h5>Barang(x{{ $qty }})</h5>
-                                    <b>RP. {{ $product->price * $qty }}</b>
+                                    <h5>Barang(x{{ $checkout->qty }})</h5>
+                                    <b>RP. {{ $product->price * $checkout->qty }}</b>
                                 </div>
 
                                 <div class="mt-2 d-flex justify-content-between px-2">
                                     <h5>Onkos kirim</h5>
-                                    <b>RP. {{ $onkir }}</b>
+                                    <b>RP. {{ $checkout->onkir }}</b>
                                 </div>
 
                                 <hr class="mt-2">
 
                                 <div class="d-flex justify-content-between px-2">
                                     <h5>Total</h5>
-                                    <b>RP. {{ $product->price * $qty + $onkir }}</b>
+                                    <b>RP. {{ $product->price * $checkout->qty + $checkout->onkir }}</b>
                                 </div>
-
-                            </div>
-                        </div>
-                        <div class="card text-dark bg-light mb-2 mt-4">
-                            <div class="card-body p-3">
-                                <form class="row" method="GET"
-                                    action="{{ route('product.checkout', [$product->id, $lat, $lon]) }}">
-                                    <div class="col-9">
-                                        <input type="number" class="form-control w-100" id="qty" name="qty"
-                                            placeholder="QTY" value="{{ $qty }}">
-                                    </div>
-                                    <div class="col-3">
-                                        <button type="submit" class="btn btn-primary btn-sm btn-block">Update</button>
-                                    </div>
-                                </form>
 
                             </div>
                         </div>
@@ -230,95 +221,55 @@
                         <div class="card text-dark bg-light mb-2 mt-2">
                             <div class="card-body p-3">
                                 <h3 class="card-title text-secondary text-bold"><i class="fa fa-user"
-                                        style="font-size: 20px"></i> Info pembeli</h3>
+                                        style="font-size: 20px"></i> Data Pembeli</h3>
                                 <hr class="mt-3">
 
-                                <form method="POST" action="{{ route('product.checkout.beli') }}">
-                                    @method('POST')
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    @error('product_id')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                    <input type="hidden" name="qty" value="{{ $qty }}">
-                                    @error('qty')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                    <input type="hidden" name="onkir" value="{{ $onkir }}">
-                                    @error('onkir')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                    <input type="hidden" name="total_harga"
-                                        value="{{ $product->price * $qty + $onkir }}">
-                                    @error('total_harga')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                    <input type="hidden" name="lat_lon" value="{{ "$lat|$lon" }}">
-                                    @error('lat_lon')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
+                                <div>
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama Lenkpap</label>
-                                        <input type="text" class="form-control" id="nama" name="nama"
-                                            value="{{ old('nama') ?? $user->name }}">
-                                        @error('nama')
-                                            <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="text" class="form-control" id="nama" disabled
+                                            value="{{ $checkout->nama_pembeli }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="noxtel" class="form-label">Nomor telpone</label>
-                                        <input type="text" class="form-control" id="noxtel" name="nomor_telp"
-                                            value="{{ old('nomor_telp') ?? $fake->nomor_telp }}">
-                                        @error('nomor_telp')
-                                            <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="text" class="form-control" id="noxtel" disabled
+                                            value="{{ $checkout->nomor_telp }}">
                                     </div>
-
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email"
-                                            value="{{ $user->email }}" readonly name="email">
-                                        @error('email')
-                                            <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
+                                            value="{{ $checkout->email }}" disabled>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="alamat" class="form-label">Alamat</label>
-                                        <input type="text" class="form-control" id="alamat" name="alamat"
-                                            value="{{ old('alamat') ?? $fake->alamat_tujuan }}">
-                                        @error('alamat')
-                                            <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="text" class="form-control" id="alamat"
+                                            value="{{ $checkout->alamat_tujuan }}" disabled>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="latlon" class="form-label">Latitude and longitude</label>
-                                        <input type="text" class="form-control" id="latlon"
-                                            value="{{ "@$lat,$lon" }}" disabled>
+                                        <label for="status" class="form-label">status</label>
+                                        <input type="text" class="form-control" disabled  value="@if ($checkout->status == 0) pending @else berhasil @endif">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="note" class="form-label">Catatan</label>
                                         <textarea class="form-control" id="note" rows="3"
-                                            name="note">{{ old('note') ?? $fake->catatan }}</textarea>
-                                        @error('note')
-                                            <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
+                                            disabled>{{ $checkout->catatan }}</textarea>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                        Checkout
+                                    <button type="button" id="pay-button" data-token="{{ $snap_token }}"
+                                        class="btn btn-primary btn-sm">
+                                        Pay
                                     </button>
-                                </form>
+                                </div>
 
                             </div>
                         </div>
                     </div>
 
                 </div>
-
                 {{-- end::content --}}
 
                 <!--begin::Product slider-->
@@ -329,6 +280,7 @@
                     <!--end::Slider button-->
                 </div>
                 <!--end::Product slider-->
+
             </div>
             <!--end::Container-->
         </div>
@@ -357,17 +309,27 @@
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
 
+
+
+    <script type="text/javascript">
+        // For example trigger on button clicked, or any time you need
+        var payButton = document.getElementById('pay-button');
+
+        payButton.addEventListener('click', function() {
+            // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+            let token = payButton.dataset.token;
+            console.log(token);
+            window.snap.pay(token);
+            // customer will be redirected after completing payment pop-up
+        });
+    </script>
+
     <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
-    <script src="{{ asset('admin/dist/assets') }}/js/scripts.bundle.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{ asset('admin/dist/assets') }}/plugins/custom/fslightbox/fslightbox.bundle.js"></script>
     <script src="{{ asset('admin/dist/assets') }}/plugins/custom/typedjs/typedjs.bundle.js"></script>
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('admin/dist/assets') }}/js/custom/landing.js"></script>
-    <!--end::Page Custom Javascript-->
-    <!--end::Javascript-->
+
 </body>
 <!--end::Body-->
 

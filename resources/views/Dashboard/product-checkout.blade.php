@@ -257,11 +257,21 @@
                                     @error('lat_lon')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
+
                                     <div class="mb-3">
-                                        <label for="nama" class="form-label">Nama Lenkpap</label>
-                                        <input type="text" class="form-control" id="nama" name="nama"
-                                            value="{{ old('nama') ?? $user->name }}">
-                                        @error('nama')
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                            value="{{ old('first_name') ?? $fake->first_name }}">
+                                        @error('first_name')
+                                            <div class="form-text text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                            value="{{ old('last_name') ?? $fake->last_name }}">
+                                        @error('last_name')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -278,7 +288,7 @@
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email"
-                                            value="{{ $user->email }}" readonly name="email">
+                                            value="{{ $fake->email }}" name="email">
                                         @error('email')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -289,6 +299,24 @@
                                         <input type="text" class="form-control" id="alamat" name="alamat"
                                             value="{{ old('alamat') ?? $fake->alamat_tujuan }}">
                                         @error('alamat')
+                                            <div class="form-text text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="postal_code" class="form-label">Code Pos</label>
+                                        <input type="text" class="form-control" id="postal_code" name="postal_code"
+                                            value="{{ old('postal_code') ?? $fake->postal_code }}">
+                                        @error('postal_code')
+                                            <div class="form-text text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="city" class="form-label">Kota</label>
+                                        <input type="text" class="form-control" id="city" name="city"
+                                            value="{{ old('city') ?? $fake->city }}">
+                                        @error('city')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

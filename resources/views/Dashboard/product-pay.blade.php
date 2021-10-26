@@ -225,10 +225,17 @@
                                 <hr class="mt-3">
 
                                 <div>
+
                                     <div class="mb-3">
-                                        <label for="nama" class="form-label">Nama Lenkpap</label>
-                                        <input type="text" class="form-control" id="nama" disabled
-                                            value="{{ $checkout->nama_pembeli }}">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="first_name" disabled
+                                            value="{{ $checkout->first_name }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="last_name" disabled
+                                            value="{{ $checkout->last_name }}">
                                     </div>
 
                                     <div class="mb-3">
@@ -249,8 +256,21 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="postal_code" class="form-label">Code Pos</label>
+                                        <input type="text" class="form-control" id="postal_code"
+                                            value="{{ $checkout->postal_code }}" disabled>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="city" class="form-label">Kota</label>
+                                        <input type="text" class="form-control" id="city"
+                                            value="{{ $checkout->city }}" disabled>
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="status" class="form-label">status</label>
-                                        <input type="text" class="form-control" disabled  value="@if ($checkout->status == 0) pending @else berhasil @endif">
+                                        <input type="text" class="form-control" disabled
+                                            value="@if ($checkout->status == 0) pending @else berhasil @endif">
                                     </div>
 
                                     <div class="mb-3">

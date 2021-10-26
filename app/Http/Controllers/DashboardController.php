@@ -95,8 +95,12 @@ class DashboardController extends Controller
         if (!auth()->check()) return redirect()->back();
 
         $request->validate([
-            'nama'          =>  ['required', 'min:3', 'max:30'],
+            'email'         =>  ['required', 'email'],
+            'first_name'    =>  ['required', 'min:3', 'max:20'],
+            'last_name'     =>  ['required', 'min:3', 'max:20'],
             'nomor_telp'    =>  ['required', 'min:4', 'max:20'],
+            'city'          =>  ['required', 'min:2', 'max:20'],
+            'postal_code'   =>  ['required', 'min:2', 'max:10'],
             'lat_lon'       =>  ['required'],
             'note'          =>  ['nullable'],
             'alamat'        =>  ['required', 'string'],
@@ -104,7 +108,6 @@ class DashboardController extends Controller
             'qty'           =>  ['required', 'integer'],
             'onkir'         =>  ['required', 'integer'],
             'total_harga'   =>  ['required', 'integer'],
-            // 'metode_pembayaran' => ['required', 'string'],
         ]);
 
         $product    =   Product::find($request->product_id);
@@ -112,7 +115,10 @@ class DashboardController extends Controller
         $user       =   (object) auth()->user();
 
         $chekout = Checkout::create([
-            'nama_pembeli'  =>  $request->nama,
+            'first_name'    =>  $request->first_name,
+            'last_name'     =>  $request->last_name,
+            'city'          =>  $request->city,
+            'postal_code'   =>  $request->postal_code,
             'nomor_telp'    =>  $request->nomor_telp,
             'status'        =>  0,
             'catatan'       =>  $request->note,
@@ -148,23 +154,39 @@ class DashboardController extends Controller
 
         $user       =   (object) auth()->user();
 
-        $params = array(
-            'transaction_details' => array(
-                'order_id'      =>  rand(),
-                'gross_amount'  =>  $product->price,
+        $params = [
+            'transaction_details' => [
+                'order_id'      =>  strtolower(uniqid(rand())),
+                'gross_amount'  =>  $request->total_harga,
                 'product_id'    =>  $product->id,
                 'qty'           =>  $request->qty,
                 'onkir'         =>  $request->onkir,
                 'harga_produk'  =>  $product->price,
                 'total_transaksi' =>  $request->total_harga,
-            ),
-            'customer_details' => array(
-                'nama_pembeli'  =>  $request->nama,
-                'alamat_tujuan' =>  $request->alamat,
-                'email'         =>  $user->email,
-                'nomor_telp'    =>  $request->nomor_telp,
-            ),
-        );
+            ],
+            'customer_details' => [
+                'first_name' =>  $request->first_name,
+                'last_name' =>  $request->last_name,
+                'email'     =>  $user->email,
+                'phone'     =>  $request->nomor_telp,
+                'address'   =>  $request->alamat,
+
+            ],
+            'item_details'  =>  [
+                [
+                    'id'    =>   ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p'][rand(0, 7)] . "0$product->id",
+                    'name'  =>  $product->name,
+                    'price' =>  $product->price,
+                    'quantity'  =>  $request->qty,
+                ],
+                [
+                    'id'    =>   ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p'][rand(0, 7)] . "0$product->id",
+                    'name'  =>  'Onkos kirim',
+                    'price' =>  $checkout->onkir,
+                    'quantity'  =>  1,
+                ]
+            ],
+        ];
 
         return \Midtrans\Snap::getSnapToken($params);
     }

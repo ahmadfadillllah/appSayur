@@ -30,6 +30,6 @@
     </div>
 @empty
     <h4 class="fs-2hx text-dark mb-5" style="text-align:center" data-kt-scroll-offset="{default: 100, lg: 150}">
-        Tidak ada Produk Disekitar mu!!
+        Tidak ada Produk Disekitar mu!! <button class="btn btn-primary btn-sm" type="button" onclick="getLocationCustomer()">refresh</button>
     </h4>
 @endforelse

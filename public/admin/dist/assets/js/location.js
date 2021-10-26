@@ -27,9 +27,13 @@ function showPositionCustomer(position) {
     $.ajax({
         type: "GET",
         url: url,
-        cache: false,
+        cache: true,
         success: function(data) {
-            $("#data").append(data);
+            document.getElementById('data').innerHTML = data;
+        },
+        error: function (params) {
+            console.error('Error: ketika mencoba mengambil data produk terdekat');
+            console.error(params);
         }
     });
     return loc1;

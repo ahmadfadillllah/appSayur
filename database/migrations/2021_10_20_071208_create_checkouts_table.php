@@ -18,9 +18,12 @@ class CreateCheckoutsTable extends Migration
             $table->foreignId('product_id');
             $table->foreignId('pembeli_id');
             $table->foreignId('penjual_id');
-            $table->string('nama_pembeli');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('alamat_tujuan');
             $table->string('email');
+            $table->string('postal_code');
+            $table->string('city');
             $table->string('nomor_telp');
             $table->string('lat_lon');
             $table->text('catatan')->nullable();

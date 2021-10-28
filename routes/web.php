@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/transaction/error', 'TransactionController@error');
 
+    Route::post('/transcation/notification/handling', 'TransactionController@notification');
 });
 
 Route::get('/generate-dumy-data/{amount}', function (int $amount) {

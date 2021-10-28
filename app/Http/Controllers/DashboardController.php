@@ -10,9 +10,6 @@ use Midtrans\Config;
 
 class DashboardController extends Controller
 {
-    public $merchant_id = 'G805780044';
-    public $client_id = 'SB-Mid-client-YCHtULs46ydSA7tV';
-    public $server_key = 'SB-Mid-server-5aQABsAA0KihdYoBHSk1kgPy';
 
     public function index()
     {
@@ -145,7 +142,7 @@ class DashboardController extends Controller
     private function midtrans(Request $request, Product $product, Checkout $checkout, $order_id)
     {
         // Set your Merchant Server Key
-        Config::$serverKey = $this->server_key;
+        Config::$serverKey = config('app.midtrans.server_key');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
         Config::$isProduction = false;
         // Set sanitization on (default)
@@ -223,11 +220,6 @@ class DashboardController extends Controller
             'snap_token'    =>  $snap_token,
         ]);
     }
-
-    public function transactionSuccess() {
-        dd(request());
-    }
-
 
     public function distance(float $lat1, float $lon1, float $lat2, float $lon2, $unit)
     {

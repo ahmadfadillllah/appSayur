@@ -2,6 +2,12 @@
 
 return [
 
+    'midtrans' => [
+        'merchant_id' => 'G805780044',
+        'client_id' => 'SB-Mid-client-YCHtULs46ydSA7tV',
+        'server_key' => 'SB-Mid-server-5aQABsAA0KihdYoBHSk1kgPy',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

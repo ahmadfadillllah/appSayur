@@ -23,7 +23,15 @@ function getLocationCustomer() {
 
 function showPositionCustomer(position) {
     var loc1 = position.coords.latitude + "|" + position.coords.longitude;
-    const url = window.location.origin . `/public/getLocation/${position.coords.latitude}/${position.coords.longitude}`;
+    const pathname = window.location.pathname;
+    let x = '/';
+    let arr = pathname.split('/');
+    if(arr[1] === 'public') {
+        x = '/public/';
+    }
+
+    const url = window.location.origin + `${x}getLocation/${position.coords.latitude}/${position.coords.longitude}`;
+    console.log(url);
     $.ajax({
         type: "GET",
         url: url,

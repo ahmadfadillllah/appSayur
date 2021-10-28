@@ -33,7 +33,8 @@ class CreateCheckoutsTable extends Migration
             $table->string('total_transaksi');
             $table->integer('qty');
             $table->integer('onkir');
-            $table->smallInteger('status')->comment('1 = pending|authorize, 2 = deny|cancel|expire, 3 = capture|settlement, 4 = refund|partial_refund');
+            $table->string('status');
+            $table->smallInteger('status_code')->comment('1 = pending|authorize, 2 = deny|cancel|expire, 3 = capture|settlement, 4 = refund|partial_refund');
             $table->timestamp('expired_at');
             $table->timestamps();
         });

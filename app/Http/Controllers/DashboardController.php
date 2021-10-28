@@ -118,7 +118,8 @@ class DashboardController extends Controller
             'city'          =>  $request->city,
             'postal_code'   =>  $request->postal_code,
             'nomor_telp'    =>  $request->nomor_telp,
-            'status'        =>  0,
+            'status_code'   =>  0,
+            'status'        =>  'pending',
             'catatan'       =>  $request->note,
             'alamat_tujuan' =>  $request->alamat,
             'email'         =>  $request->email,
@@ -204,7 +205,7 @@ class DashboardController extends Controller
 
     private function randId(string $suffix): string
     {
-        $words = ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p', 'z'];
+        $words = ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p', 'z', 'xc', 'r', 'ot', 'qx', 'ws'];
         return strtoupper($words[rand(0, count($words) - 1)] . rand(0, 9) . "$suffix");
     }
 

@@ -33,8 +33,8 @@ function showPositionCustomer(position) {
             document.getElementById('data').innerHTML = data;
         },
         error: function (params) {
+            document.getElementById('data').innerHTML = params.responseText;
             console.error('Error: ketika mencoba mengambil data produk terdekat');
-            document.getElementById('data').innerHTML = params;
             console.error(params);
         }
     });

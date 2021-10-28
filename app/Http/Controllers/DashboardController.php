@@ -268,7 +268,7 @@ class DashboardController extends Controller
 
         // dump($products);
 
-        return view('dashboard.product-card', [
+        return view('Dashboard.product-card', [
             'products'  =>  $products,
             'laty'   =>  $lat,
             'lony'   =>  $lon,

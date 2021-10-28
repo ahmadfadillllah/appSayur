@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::get('/generate-dumy-data/{amount}', function ($amount) {
+Route::get('/generate-dumy-data/{amount}', function (int $amount) {
     $user = factory(User::class)->create();
     $r = factory(Product::class, $amount)->create();
     dd($user, $r);

@@ -204,8 +204,8 @@ class DashboardController extends Controller
 
     private function randId(string $suffix): string
     {
-        $pattern = ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p', 'z'];
-        return strtoupper($pattern[rand(0, count($pattern) - 1)] . rand(0, 9) . "$suffix");
+        $words = ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p', 'z'];
+        return strtoupper($words[rand(0, count($words) - 1)] . rand(0, 9) . "$suffix");
     }
 
     public function productPay($id, $token)

@@ -34,6 +34,7 @@ function showPositionCustomer(position) {
         },
         error: function (params) {
             console.error('Error: ketika mencoba mengambil data produk terdekat');
+            document.getElementById('data').innerHTML = params;
             console.error(params);
         }
     });

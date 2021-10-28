@@ -23,9 +23,7 @@ class DashboardController extends Controller
 
     public function product()
     {
-        $dataProduk = Product::all();
-
-        return view('Dashboard.product', ['dataProduk' => $dataProduk]);
+        return view('Dashboard.product');
     }
 
     public function showProduct()

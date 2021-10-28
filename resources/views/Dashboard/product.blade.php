@@ -6,6 +6,7 @@
     <base href="">
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
     <!--begin::Fonts-->
@@ -86,7 +87,7 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link active py-3 px-4 px-xxl-6"
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
                                                 href="{{ route('dashboard') }}" data-kt-scroll-toggle="true"
                                                 data-kt-drawer-dismiss="true">Home</a>
                                             <!--end::Menu link-->
@@ -95,7 +96,7 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                            <a class="menu-link nav-link active py-3 px-4 px-xxl-6"
                                                 href="{{ route('product') }}" data-kt-scroll-toggle="true"
                                                 data-kt-drawer-dismiss="true">Produk Terdekat</a>
                                             <!--end::Menu link-->

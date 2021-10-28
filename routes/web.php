@@ -26,6 +26,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/product/pay/{id}/{token}', 'DashboardController@productPay')->name('product.pay');
 
+    Route::get('/transaction/success', 'DashboardController@transactionSuccess');
+
+    Route::get('/transaction/fail', function () {
+        dd('unfinish', request());
+    });
+
+    Route::get('/transaction/error', function () {
+        dd('error', request());
+    });
+
 });
 
 Route::get('/getLocation/{lat}/{lon}', 'DashboardController@getLocation')->name('getLocation');

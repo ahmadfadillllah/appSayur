@@ -156,31 +156,44 @@ class DashboardController extends Controller
 
         $params = [
             'transaction_details' => [
-                'order_id'      =>  strtolower(uniqid(rand())),
+                'order_id'      =>  $this->randId(uniqid()),
                 'gross_amount'  =>  $request->total_harga,
-                'product_id'    =>  $product->id,
-                'qty'           =>  $request->qty,
-                'onkir'         =>  $request->onkir,
-                'harga_produk'  =>  $product->price,
-                'total_transaksi' =>  $request->total_harga,
             ],
             'customer_details' => [
                 'first_name' =>  $request->first_name,
                 'last_name' =>  $request->last_name,
                 'email'     =>  $user->email,
                 'phone'     =>  $request->nomor_telp,
-                'address'   =>  $request->alamat,
-
+                "billing_address"   =>  [
+                    "first_name"    =>  $user->name,
+                    "last_name"     =>  "",
+                    "email"         =>  $user->email,
+                    "phone"         =>  "08123456789",
+                    "address"       =>  "Sudirman No.12",
+                    "city"          =>  "Makassar",
+                    "postal_code"   =>  "12190",
+                    "country_code"  =>  "IDN"
+                ],
+                "shipping_address"  =>  [
+                    "first_name"    =>  $request->first_name,
+                    "last_name"     =>  $request->last_name,
+                    "email"         =>  $request->email,
+                    "phone"         =>  $request->nomor_telp,
+                    "address"       =>  $request->alamat,
+                    "city"          =>  $request->city,
+                    "postal_code"   =>  $request->postal_code,
+                    "country_code"  =>  "IDN"
+                ],
             ],
             'item_details'  =>  [
                 [
-                    'id'    =>   ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p'][rand(0, 7)] . "0$product->id",
+                    'id'    =>   $this->randId($product->id),
                     'name'  =>  $product->name,
                     'price' =>  $product->price,
                     'quantity'  =>  $request->qty,
                 ],
                 [
-                    'id'    =>   ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p'][rand(0, 7)] . "0$product->id",
+                    'id'    =>   $this->randId($product->id),
                     'name'  =>  'Onkos kirim',
                     'price' =>  $checkout->onkir,
                     'quantity'  =>  1,
@@ -189,6 +202,12 @@ class DashboardController extends Controller
         ];
 
         return \Midtrans\Snap::getSnapToken($params);
+    }
+
+    private function randId(string $suffix): string
+    {
+        $pattern = ['a', 'b', 'c', 'd', 'f', 'x', 'k', 'p', 'z'];
+        return strtoupper($pattern[rand(0, count($pattern) - 1)] . rand(0, 9) . "$suffix");
     }
 
     public function productPay($id, $token)
@@ -202,6 +221,10 @@ class DashboardController extends Controller
             'product'       =>  $checkout->product,
             'snap_token'    =>  $snap_token,
         ]);
+    }
+
+    public function transactionSuccess() {
+        dd(request());
     }
 
 
@@ -244,6 +267,8 @@ class DashboardController extends Controller
                 $products[] = $produk;
             }
         }
+
+        // dump($products);
 
         return view('dashboard.product-card', [
             'products'  =>  $products,

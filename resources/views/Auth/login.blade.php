@@ -4,6 +4,7 @@
 	<head><base href="../../../">
 		<title>Login</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 		<meta charset="utf-8" />
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="article" />

@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!--end::Fonts-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet"

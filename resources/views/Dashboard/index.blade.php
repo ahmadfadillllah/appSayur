@@ -6,6 +6,7 @@
     <base href="">
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
     <!--begin::Fonts-->
@@ -18,6 +19,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->

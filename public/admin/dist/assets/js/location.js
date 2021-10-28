@@ -23,7 +23,7 @@ function getLocationCustomer() {
 
 function showPositionCustomer(position) {
     var loc1 = position.coords.latitude + "|" + position.coords.longitude;
-    const url = window.location.origin + `/getLocation/${position.coords.latitude}/${position.coords.longitude}`;
+    const url = `/getLocation/${position.coords.latitude}/${position.coords.longitude}`;
     console.log(url);
     $.ajax({
         type: "GET",

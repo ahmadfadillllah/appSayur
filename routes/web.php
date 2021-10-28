@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Product;
+use App\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -79,9 +80,10 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::get('/generate-dumy-data', function () {
-    $r = factory(Product::class, 20)->create();
-    dd($r);
+Route::get('/generate-dumy-data/{amount}', function ($amount) {
+    $user = factory(User::class)->create();
+    $r = factory(Product::class, $amount)->create();
+    dd($user, $r);
 });
 
 Route::get('/getLocation/{lat}/{lon}', 'DashboardController@getLocation')->name('getLocation');

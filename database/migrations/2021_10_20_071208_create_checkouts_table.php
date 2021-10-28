@@ -18,6 +18,7 @@ class CreateCheckoutsTable extends Migration
             $table->foreignId('product_id');
             $table->foreignId('pembeli_id');
             $table->foreignId('penjual_id');
+            $table->string('order_id')->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('alamat_tujuan');
@@ -32,7 +33,7 @@ class CreateCheckoutsTable extends Migration
             $table->string('total_transaksi');
             $table->integer('qty');
             $table->integer('onkir');
-            $table->smallInteger('status');
+            $table->smallInteger('status')->comment('1 = pending, 2 = gagal, 3 = success, 4 = error');
             $table->timestamp('expired_at');
             $table->timestamps();
         });

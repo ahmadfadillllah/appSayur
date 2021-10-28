@@ -112,7 +112,10 @@ class DashboardController extends Controller
 
         $user       =   (object) auth()->user();
 
+        $order_id   =   $this->randId(uniqid($request->product_id));
+
         $chekout = Checkout::create([
+            'order_id'      =>  $order_id,
             'first_name'    =>  $request->first_name,
             'last_name'     =>  $request->last_name,
             'city'          =>  $request->city,
@@ -134,12 +137,12 @@ class DashboardController extends Controller
             'metode_pembayaran' => 'none',
         ]);
 
-        $snapToken = $this->setUpMidtrans($request, $product, $chekout);
+        $snapToken = $this->midtrans($request, $product, $chekout, $order_id);
 
         return redirect()->route('product.pay', [$chekout->id, Crypt::encrypt($snapToken)]);
     }
 
-    private function setUpMidtrans(Request $request, Product $product, Checkout $checkout)
+    private function midtrans(Request $request, Product $product, Checkout $checkout, $order_id)
     {
         // Set your Merchant Server Key
         Config::$serverKey = $this->server_key;
@@ -154,7 +157,7 @@ class DashboardController extends Controller
 
         $params = [
             'transaction_details' => [
-                'order_id'      =>  $this->randId(uniqid()),
+                'order_id'      =>  $order_id,
                 'gross_amount'  =>  $request->total_harga,
             ],
             'customer_details' => [

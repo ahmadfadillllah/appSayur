@@ -4,21 +4,32 @@
 
 <head>
     <base href="">
-    <title>Dashboard</title>
+    <title>Produk terdekat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
+
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
+
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet"
         type="text/css" />
+
     <link href="{{ asset('admin/dist/assets') }}/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.min.css"
+        integrity="sha512-8vr9VoQNQkkCCHGX4BSjg63nI5CI4B+nZ8SF2xy4FMOIyH/2MT0r55V276ypsBFAgmLIGXKtRhbbJueVyYZXjA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -141,12 +152,13 @@
             <!--end::Curve bottom-->
         </div>
         <!--end::Header Section-->
+
         <!--begin::How It Works Section-->
         <div class="mb-n10 mb-lg-n20 z-index-2">
             <!--begin::Container-->
             <div class="container">
                 <!--begin::Heading-->
-                <div class="text-center mb-17">
+                <div class="text-center mb-3">
                     <!--begin::Title-->
                     <h3 class="fs-2hx text-dark mb-5" id="list-sayur" data-kt-scroll-offset="{default: 100, lg: 150}">
                         Daftar Sayur</h3>
@@ -154,6 +166,19 @@
                     <!--begin::Text-->
                     <div class="fs-5 text-muted fw-bold">Daftar Penjual sayur terdekat anda!</div>
                     <!--end::Text-->
+
+
+
+                </div>
+
+                <div class="mt-2 mb-17">
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+                    @if (session('fail'))
+                        <div class="alert alert-danger">{{ session('fail') }}</div>
+                    @endif
                 </div>
                 <!--end::Heading-->
                 <!--begin::Row-->
@@ -202,8 +227,8 @@
     <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{{ asset('admin/dist/assets') }}/plugins/custom/fslightbox/fslightbox.bundle.js"></script>
-    <script src="{{ asset('admin/dist/assets') }}/plugins/custom/typedjs/typedjs.bundle.js"></script>
+    {{-- <script src="{{ asset('admin/dist/assets') }}/plugins/custom/fslightbox/fslightbox.bundle.js"></script> --}}
+    {{-- <script src="{{ asset('admin/dist/assets') }}/plugins/custom/typedjs/typedjs.bundle.js"></script> --}}
     <!--end::Page Vendors Javascript-->
     <!--end::Javascript-->
 </body>

@@ -3,7 +3,6 @@
 use App\Http\Controllers\DashboardController;
 use App\Product;
 use App\User;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,19 +22,17 @@ Route::get('/product/detail/{id}', 'DashboardController@showProduct')->name('pro
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('/add-to-cart', 'DashboardController@addToCart')->name('product.add');
+
     Route::get('/product/order/{id}/{lat}/{lot}', 'DashboardController@checkoutPage')->name('product.checkout');
 
-    Route::post('/product/checkout', 'DashboardController@checkout')->name('product.checkout.beli');
+    Route::get('/product/pay/{id}/{token}', 'TransactionController@productPay')->name('product.pay');
 
-    Route::get('/product/pay/{id}/{token}', 'DashboardController@productPay')->name('product.pay');
-
-    Route::get('/transaction/finish', 'TransactionController@finish');
-
-    Route::get('/transaction/fail', 'TransactionController@fail');
-
-    Route::get('/transaction/error', 'TransactionController@error');
+    Route::get('/transaction', 'TransactionController@transactionRedirectionResult');
 
     Route::get('/transcation/notification/handling', 'TransactionController@notification');
+
+    Route::post('/product/checkout', 'TransactionController@checkout')->name('product.checkout.beli');
 });
 
 Route::get('/generate-dumy-data/{amount}', function (int $amount) {

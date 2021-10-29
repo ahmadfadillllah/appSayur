@@ -12,7 +12,6 @@ function showPosition(position) {
     console.log(loc1.value);
 }
 
-
 function getLocationCustomer() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPositionCustomer);
@@ -30,11 +29,13 @@ function showPositionCustomer(position) {
         url: url,
         cache: true,
         success: function(data) {
-            document.getElementById('data').innerHTML = data;
+            document.getElementById("data").innerHTML = data;
         },
-        error: function (params) {
-            document.getElementById('data').innerHTML = params.responseText;
-            console.error('Error: ketika mencoba mengambil data produk terdekat');
+        error: function(params) {
+            document.getElementById("data").innerHTML = params.responseText;
+            console.error(
+                "Error: ketika mencoba mengambil data produk terdekat"
+            );
             console.error(params);
         }
     });

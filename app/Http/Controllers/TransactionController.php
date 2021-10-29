@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
-use App\Checkout;
 use App\Product;
 use App\Transaction;
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ class TransactionController extends Controller
 
     public function productPay($id, $snap_token)
     {
-        $checkout   =   Checkout::find($id);
+        $checkout   =   Transaction::find($id);
 
         return view('Dashboard.product-pay', [
             'checkout'      =>  $checkout,

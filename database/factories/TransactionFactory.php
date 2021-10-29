@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Checkout;
+use App\Transaction;
 use Faker\Generator as Faker;
 
-$factory->define(Checkout::class, function (Faker $faker) {
+$factory->define(Transaction::class, function (Faker $faker) {
     return [
         'product_id'    =>  null,
         'pembeli_id'    =>  null,

@@ -123,7 +123,14 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#keranjang"
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#transaksi"
+                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Transaksi</a>
+                                            <!--end::Menu link-->
+                                        </div>
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin::Menu link-->
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ route('user.cart') }}"
                                                 data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Keranjang</a>
                                             <!--end::Menu link-->
                                         </div>
@@ -175,25 +182,39 @@
                                         style="font-size: 20px"></i> Detail pesanan</h3>
                                 <hr class="mt-3">
 
-                                <div class="cart-products">
-                                    <div class="card-product">
-                                        <img src="{{ $product->getImage() }}" alt="img" width="100px">
-                                        <div class="card-info">
-                                            <div>
-                                                <h5>{{ $product->name }}</h5>
-                                                <h6>Stock {{ $product->stock }}</h6>
-                                                <h6>QTY {{ $qty }}</h6>
-                                            </div>
-                                            <div>
-                                                <b>RP. {{ $product->price }}</b>
+                                @php
+                                    $total_harga = 0;
+                                @endphp
+
+                                @foreach ($carts as $cart)
+                                    @php
+                                        $cart_product = $cart->product;
+                                        $total_harga += $cart->price;
+                                    @endphp
+                                    <div class="cart-products">
+                                        <div class="card-product">
+                                            <img src="{{ $cart_product->getImage() }}" alt="img" width="100px">
+                                            <div class="card-info">
+                                                <div>
+                                                    <h5>{{ $cart->name }}(x{{ $cart->quantity }})</h5>
+                                                    <h6>Stock {{ $cart_product->stock }}</h6>
+                                                    <h6>QTY {{ $qty }}</h6>
+                                                </div>
+                                                <div class="text-end">
+                                                    <b class="d-block">RP.
+                                                        {{ $cart->price }}(x{{ $cart->quantity }})</b>
+                                                    <hr class="mt-2 mb-1">
+                                                    <b class="d-block">RP.
+                                                        {{ $cart->price * $cart->quantity }}</b>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
 
                                 <div class="mt-2 d-flex justify-content-between px-2">
-                                    <h5>Barang(x{{ $qty }})</h5>
-                                    <b>RP. {{ $product->price * $qty }}</b>
+                                    <h5>Total Harga Barang</h5>
+                                    <b>RP. {{ $total_harga }}</b>
                                 </div>
 
                                 <div class="mt-2 d-flex justify-content-between px-2">
@@ -205,12 +226,12 @@
 
                                 <div class="d-flex justify-content-between px-2">
                                     <h5>Total</h5>
-                                    <b>RP. {{ $product->price * $qty + $onkir }}</b>
+                                    <b>RP. {{ $total_harga + $onkir }}</b>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="card text-dark bg-light mb-2 mt-4">
+                        {{-- <div class="card text-dark bg-light mb-2 mt-4">
                             <div class="card-body p-3">
                                 <form class="row" method="GET"
                                     action="{{ route('product.checkout', [$product->id, $lat, $lon]) }}">
@@ -224,7 +245,7 @@
                                 </form>
 
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="col-md-7">

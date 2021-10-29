@@ -30,9 +30,12 @@ class DashboardController extends Controller
         dd('test');
     }
 
-    public function checkoutPage(string $id, $lat, $lon)
+    public function checkoutPage(Request $request)
     {
-        $product    =   Product::find($id);
+        $lat        =   $request->lat;
+        $lon        =   $request->lon;
+
+        $product    =   Product::find(2);
         $onkir      =   00;
 
         if (!$product) redirect()->back();
@@ -66,9 +69,11 @@ class DashboardController extends Controller
             $onkir  =   6000;
         }
 
-        $user = (object) auth()->user();
+        $user   =   (object) auth()->user();
 
-        $checkout_fake = factory(Checkout::class)->make([
+        $carts  =   $user->cart;
+
+        $checkout_fake = factory(Transaction::class)->make([
             'onkir'     =>  $onkir,
             'lat_lon'   =>  "$lat|$lon",
             'qty'       =>  $qty,
@@ -84,6 +89,17 @@ class DashboardController extends Controller
             'lon'       =>  $lon,
             'qty'       =>  $qty,
             'fake'      =>  $checkout_fake,
+            'carts'     =>  $carts
+        ]);
+    }
+
+    public function cart()
+    {
+        $user   =   (object) auth()->user();
+
+        return view('Dashboard.user-cart', [
+            'carts' =>  $user->cart,
+            'user'  =>  $user,
         ]);
     }
 

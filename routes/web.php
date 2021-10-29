@@ -24,7 +24,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/add-to-cart', 'DashboardController@addToCart')->name('product.add');
 
-    Route::get('/product/order/{id}/{lat}/{lot}', 'DashboardController@checkoutPage')->name('product.checkout');
+    Route::get('/cart', 'DashboardController@cart')->name('user.cart');
+
+    Route::get('/product/order', 'DashboardController@checkoutPage')->name('product.checkout');
 
     Route::get('/product/pay/{id}/{token}', 'TransactionController@productPay')->name('product.pay');
 

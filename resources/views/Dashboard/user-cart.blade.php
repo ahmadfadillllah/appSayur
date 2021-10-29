@@ -4,31 +4,29 @@
 
 <head>
     <base href="">
-    <title>Produk terdekat</title>
+    <title>Keranjang - {{ $user->name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
-
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!--end::Fonts-->
-
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
-
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet"
         type="text/css" />
 
     <link href="{{ asset('admin/dist/assets') }}/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
+        integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.min.css"
-        integrity="sha512-8vr9VoQNQkkCCHGX4BSjg63nI5CI4B+nZ8SF2xy4FMOIyH/2MT0r55V276ypsBFAgmLIGXKtRhbbJueVyYZXjA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
+
 
     <!--end::Global Stylesheets Bundle-->
 </head>
@@ -107,7 +105,7 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link active py-3 px-4 px-xxl-6"
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
                                                 href="{{ route('product') }}" data-kt-scroll-toggle="true"
                                                 data-kt-drawer-dismiss="true">Produk Terdekat</a>
                                             <!--end::Menu link-->
@@ -124,8 +122,9 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ route('user.cart') }}"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Keranjang</a>
+                                            <a class="menu-link active nav-link py-3 px-4 px-xxl-6"
+                                                href="{{ route('user.cart') }}" data-kt-scroll-toggle="true"
+                                                data-kt-drawer-dismiss="true">Keranjang</a>
                                             <!--end::Menu link-->
                                         </div>
                                     </div>
@@ -160,40 +159,62 @@
             <!--end::Curve bottom-->
         </div>
         <!--end::Header Section-->
-
         <!--begin::How It Works Section-->
         <div class="mb-n10 mb-lg-n20 z-index-2">
             <!--begin::Container-->
             <div class="container">
-                <!--begin::Heading-->
-                <div class="text-center mb-3">
-                    <!--begin::Title-->
-                    <h3 class="fs-2hx text-dark mb-5" id="list-sayur" data-kt-scroll-offset="{default: 100, lg: 150}">
-                        Daftar Sayur</h3>
-                    <!--end::Title-->
-                    <!--begin::Text-->
-                    <div class="fs-5 text-muted fw-bold">Daftar Penjual sayur terdekat anda!</div>
-                    <!--end::Text-->
 
+                {{-- begin::content --}}
+                <div class="row">
+                    <div class="col-md-8">
+
+                        <div class="card text-dark bg-light">
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart"
+                                        style="font-size: 20px"></i> Keranjang</h3>
+                                <hr class="mt-3">
+
+                                <table class="table table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">gambar</th>
+                                            <th scope="col">nama</th>
+                                            <th scope="col">harga</th>
+                                            <th scope="col">quantity</th>
+                                            <th scope="col">action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($carts as $cart)
+                                            <tr>
+                                                <th scope="row">{{ $loop->index }}</th>
+                                                <td><img src="{{ $cart->product->getImage() }}" alt="image"
+                                                        width="50px"></td>
+                                                <td>{{ $cart->name }}</td>
+                                                <td>{{ $cart->price }}</td>
+                                                <td>{{ $cart->quantity }}</td>
+                                                <td>
+                                                    <a href="#" class="badge badge-danger">hapus</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer p-3">
+                                <div class="d-flex">
+                                    <a href="{{ route('product.checkout') }}" class="btn btn-primary btn-sm" disabled
+                                        id="checkout-btn">Checkout</a>
+                                    <a href="#" class="btn btn-danger btn-sm" style="margin-left: 5px">Bersihkan
+                                        keranjang</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {{-- end::content --}}
 
-                <div class="mt-2 mb-17">
-                    @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-
-                    @if (session('fail'))
-                        <div class="alert alert-danger">{{ session('fail') }}</div>
-                    @endif
-                </div>
-                <!--end::Heading-->
-                <!--begin::Row-->
-                <div class="row w-100 gy-10 mb-md-20" id="data">
-
-                    {{-- Card gonna be here --}}
-
-                </div>
-                <!--end::Row-->
                 <!--begin::Product slider-->
                 <div class="tns tns-default">
                     <!--begin::Slider button-->
@@ -227,16 +248,26 @@
         <!--end::Scrolltop-->
     </div>
     <!--end::Main-->
-    <!--begin::Javascript-->
-    <!--begin::Global Javascript Bundle(used by all pages)-->
 
-    <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    {{-- <script src="{{ asset('admin/dist/assets') }}/plugins/custom/fslightbox/fslightbox.bundle.js"></script> --}}
-    {{-- <script src="{{ asset('admin/dist/assets') }}/plugins/custom/typedjs/typedjs.bundle.js"></script> --}}
-    <!--end::Page Vendors Javascript-->
-    <!--end::Javascript-->
+    <script>
+        getLatLon();
+        function getLatLon() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    let btn = document.getElementById("checkout-btn");
+                    let href = btn.href;
+                    let lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    href = `${href}?lat=${lat}&lon=${lon}`;
+                    console.log(href);
+                    btn.href = href;
+                    btn.removeAttribute('disabled');
+                });
+            } else {
+                console.error("Your browser doesnt support geolocation feature!");
+            }
+        }
+    </script>
 </body>
 <!--end::Body-->
 

@@ -136,14 +136,18 @@ class DashboardController extends Controller
 
     public function removeCart($id)
     {
-        $user   =   (object) auth()->user();
+        try {
+            $user   =   (object) auth()->user();
 
-        $result =   $user->cart()->find($id)->delete();
+            $result =   $user->cart()->find($id)->delete();
 
-        if (!$result) {
-            return redirect()->back()->with('success', 'Berhasil menghapus keranjang yang ber-id: ' . $id);
-        } else {
-            return redirect()->back()->with('fail', 'Gagal menghapus keranjang yang ber-id: ' . $id);
+            if ($result) {
+                return redirect()->back()->with('success', 'Berhasil menghapus keranjang yang ber-id: ' . $id);
+            } else {
+                return redirect()->back()->with('fail', 'Gagal menghapus keranjang yang ber-id: ' . $id);
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('fail', 'Terjadi kesalahan ketika menghapus keranjang!');
         }
     }
 

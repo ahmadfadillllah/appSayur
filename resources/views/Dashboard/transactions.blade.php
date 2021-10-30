@@ -228,7 +228,16 @@
                                 </table>
                             </div>
                             <div class="card-footer p-3">
-                                <form method="POST" action="{{ route('cart.clear') }}" class="d-flex">
+                                <form method="POST" action="{{ route('transaction.clear', ['no']) }}"
+                                    class="d-flex">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm" style="margin-left: 5px">
+                                        Bersihkan transaksi
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('transaction.clear', ['all']) }}"
+                                    class="d-flex">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" style="margin-left: 5px">

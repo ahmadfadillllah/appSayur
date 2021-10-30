@@ -299,11 +299,14 @@ class TransactionController extends Controller
         return \Midtrans\Snap::getSnapToken($params);
     }
 
-    public function clear()
+    public function clear($isAll)
     {
         $user   =   (object) auth()->user();
 
-        $result = $user->transactions()->where('status_code', '!=', 1)->delete();
+        if (strtolower($isAll) == 'all')
+            $result = $user->transactions()->where('status_code', '!=', 1)->delete();
+        else
+            $result = $user->transactions()->delete();
 
         if (!$result) {
             return redirect()->back()->with('fail', 'Gagal membersihkan transaksi');

@@ -81,9 +81,14 @@ class TransactionController extends Controller
 
         $order   =   $user->order()->create($order_data);
 
+        $order_id   =   [
+            'order_id'  =>  $order->id,
+            'created_at' => time(),
+        ];
+
         // data transaksi
         $transaction_data   =   [
-            'order_id'      =>  $order->id,
+            'order_id'      =>  base64_encode(json_encode($order_id)),
             'status_code'   =>  0,
             'status'        =>  'processing',
             'user_id'       =>  $user->id,
@@ -109,11 +114,12 @@ class TransactionController extends Controller
      */
     public function transactionRedirectionResult(Request $request)
     {
-        $order_id           =   $request->order_id;
+        $json_data          =   base64_decode($request->order_id);
+        $data               =   json_decode($json_data);
         $status_trf         =   $request->status_trs;
         $transaction_status =   $request->transaction_status;
 
-        $transaction    =   Transaction::where('order_id', $order_id)->first();
+        $transaction    =   Transaction::where('order_id', $data['order_id'])->first();
 
         $status_code    =   0;
 
@@ -170,51 +176,65 @@ class TransactionController extends Controller
 
     public function notification()
     {
-        \Midtrans\Config::$isProduction = false;
-        \Midtrans\Config::$serverKey = config('app.midtrans.server_key');
+        try {
+            \Midtrans\Config::$isProduction = false;
+            \Midtrans\Config::$serverKey = config('app.midtrans.server_key');
 
-        $notif = new \Midtrans\Notification();
+            $notif = new \Midtrans\Notification();
 
-        $transaction    =   $notif->transaction_status;
-        $type           =   $notif->payment_type;
-        $order_id       =   $notif->order_id;
-        $fraud_status   =   $notif->fraud_status;
-        $gross_amount   =   $notif->gross_amount;
-        $currency       =   $notif->currency;
-        $currency       =   $notif->currency;
-        $approval_code  =   $notif->approval_code;
-        $bank           =   $notif->bank;
-        $eci            =   $notif->eci;
-        $va_number      =   json_encode($notif->va_numbers ?? []);
-        $store          =   $notif->store;
-        $masked_card    =   $notif->masked_card;
+            $json_data          =   base64_decode($notif->order_id);
+            $data               =   json_decode($json_data);
 
-        $data   =   [
-            'fraud_status'  =>  $fraud_status,
-            'gross_amount'  =>  $gross_amount,
-            'currency'      =>  $currency,
-            'bank'          =>  $bank,
-            'va_number'     =>  $va_number,
-            'store'         =>  $store,
-            'masked_card'   =>  $masked_card,
-            'eci'           =>  $eci,
-            'approval_code' =>  $approval_code,
-            'status'        =>  $transaction,
-            'metode_pembayaran' => $type,
-        ];
+            $transaction    =   $notif->transaction_status;
+            $type           =   $notif->payment_type;
+            $order_id       =   $data['order_id'];
+            $fraud_status   =   $notif->fraud_status;
+            $gross_amount   =   $notif->gross_amount;
+            $currency       =   $notif->currency;
+            $currency       =   $notif->currency;
+            $approval_code  =   $notif->approval_code;
+            $bank           =   $notif->bank;
+            $eci            =   $notif->eci;
+            $va_number      =   json_encode($notif->va_numbers ?? []);
+            $store          =   $notif->store;
+            $masked_card    =   $notif->masked_card;
 
-        if ($transaction == 'capture') {
-            $data['status_code']    =   3;
-        } else if ($transaction == 'settlement') {
-            $data['status_code']    =   3;
-        } else if ($transaction == 'pending') {
-            $data['status_code']    =   1;
-        } else if ($transaction == 'deny') {
-            $data['status_code']    =   2;
-        } else if ($transaction == 'expire') {
-            $data['status_code']    =   2;
-        } else if ($transaction == 'cancel') {
-            $data['status_code']    =   2;
+            $data   =   [
+                'fraud_status'  =>  $fraud_status,
+                'gross_amount'  =>  $gross_amount,
+                'currency'      =>  $currency,
+                'bank'          =>  $bank,
+                'va_number'     =>  $va_number,
+                'store'         =>  $store,
+                'masked_card'   =>  $masked_card,
+                'eci'           =>  $eci,
+                'approval_code' =>  $approval_code,
+                'status'        =>  $transaction,
+                'metode_pembayaran' => $type,
+            ];
+
+            if ($transaction == 'capture') {
+                $data['status_code']    =   3;
+            } else if ($transaction == 'settlement') {
+                $data['status_code']    =   3;
+            } else if ($transaction == 'pending') {
+                $data['status_code']    =   1;
+            } else if ($transaction == 'deny') {
+                $data['status_code']    =   2;
+            } else if ($transaction == 'expire') {
+                $data['status_code']    =   2;
+            } else if ($transaction == 'cancel') {
+                $data['status_code']    =   2;
+            }
+
+            $transaction    =   Transaction::where('order_id', $order_id)->first();
+
+            $transaction->update($data);
+
+            Log::info('Transaksi selesai dengan status: ' . $transaction);
+        } catch (\Throwable $th) {
+            Log::info('Transaksi gagal dengan error: ' . $th->getMessage() . " at " . get_class($th));
+            throw $th;
         }
     }
 

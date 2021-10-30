@@ -196,6 +196,7 @@
                                 <table class="table table-striped text-center">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col">order id</th>
                                             <th scope="col">fullname</th>
                                             <th scope="col">alamat tujuan</th>
@@ -213,7 +214,7 @@
                                                 $order = $transaction->order;
                                             @endphp
                                             <tr>
-                                                <td>{{ $order->id }}</td>
+                                                <th scope="row">{{ $loop->index }}</th>
                                                 <td>
                                                     {{ $transaction->first_name . ' ' . $transaction->last_name }}
                                                 </td>
@@ -221,6 +222,7 @@
                                                 <td>{{ $order->quantity }}</td>
                                                 <td>{{ $transaction->total_transaksi }}</td>
                                                 <td>{{ $order->onkir }}</td>
+                                                <td>{{ $order->id }}</td>
                                                 <td>{{ $transaction->metode_pembayaran ?? '-' }}</td>
                                                 <td>{{ $transaction->status }}</td>
                                                 {{-- <td>

@@ -62,7 +62,7 @@ class DashboardController extends Controller
         $user   =   (object) auth()->user();
 
         return view('Dashboard.user-cart', [
-            'carts' =>  $user->cart,
+            'carts' =>  $user->cart()->latest()->get(),
             'user'  =>  $user,
         ]);
     }

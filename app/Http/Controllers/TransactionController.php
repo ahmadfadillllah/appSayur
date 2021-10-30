@@ -167,7 +167,7 @@ class TransactionController extends Controller
 
         return view('Dashboard.transactions', [
             'user'  =>  $user,
-            'transactions' => $user->transactions,
+            'transactions' => $user->transactions()->latest()->get(),
         ]);
     }
 

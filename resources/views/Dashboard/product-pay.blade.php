@@ -127,8 +127,9 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ route('transactions') }}"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Transaksi</a>
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                                href="{{ route('transactions') }}" data-kt-scroll-toggle="true"
+                                                data-kt-drawer-dismiss="true">Transaksi</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--begin::Menu item-->
@@ -359,29 +360,28 @@
             console.log(token);
             window.snap.pay(token);
             // customer will be redirected after completing payment pop-up
-        });
 
-
-        window.snap.pay('SNAP_TRANSACTION_TOKEN', {
-            onSuccess: function(result) {
-                /* You may add your own implementation here */
-                alert("payment success!");
-                console.log(result);
-            },
-            onPending: function(result) {
-                /* You may add your own implementation here */
-                alert("wating your payment!");
-                console.log(result);
-            },
-            onError: function(result) {
-                /* You may add your own implementation here */
-                alert("payment failed!");
-                console.log(result);
-            },
-            onClose: function() {
-                /* You may add your own implementation here */
-                alert('you closed the popup without finishing the payment');
-            }
+            window.snap.pay(token, {
+                onSuccess: function(result) {
+                    /* You may add your own implementation here */
+                    alert("payment success!");
+                    console.log(result);
+                },
+                onPending: function(result) {
+                    /* You may add your own implementation here */
+                    alert("wating your payment!");
+                    console.log(result);
+                },
+                onError: function(result) {
+                    /* You may add your own implementation here */
+                    alert("payment failed!");
+                    console.log(result);
+                },
+                onClose: function() {
+                    /* You may add your own implementation here */
+                    alert('you closed the popup without finishing the payment');
+                }
+            });
         });
     </script>
 

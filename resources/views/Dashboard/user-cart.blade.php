@@ -177,7 +177,7 @@
                 {{-- begin::content --}}
                 <div class="row">
 
-                    <div class="col-md-8">
+                    <div class="col-md-10">
 
                         <div class="card text-dark bg-light">
                             <div class="card-body p-4">

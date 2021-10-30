@@ -109,7 +109,7 @@ class TransactionController extends Controller
      */
     public function transactionRedirectionResult(Request $request)
     {
-        $order_id          =   base64_decode($request->order_id);
+        $order_id           =   $this->decodeOrderId($request->order_id);
         $status_trf         =   $request->status_trs;
         $transaction_status =   $request->transaction_status;
 
@@ -178,7 +178,7 @@ class TransactionController extends Controller
 
             $transaction    =   $notif->transaction_status;
             $type           =   $notif->payment_type;
-            $order_id       =   base64_decode($notif->order_id);
+            $order_id       =   $this->decodeOrderId($notif->order_id);
             $fraud_status   =   $notif->fraud_status;
             $gross_amount   =   $notif->gross_amount;
             $currency       =   $notif->currency;
@@ -245,7 +245,7 @@ class TransactionController extends Controller
 
         $user       =   (object) auth()->user();
 
-        $transaction_details['order_id']     =  base64_encode($order->id);
+        $transaction_details['order_id']     =  $this->encodeOrderId($order->id);
         $transaction_details['gross_amount'] =  $request->total_harga;
 
         $billing_address    =   [
@@ -311,7 +311,7 @@ class TransactionController extends Controller
         if (!$result) {
             return redirect()->back()->with('fail', 'Gagal membersihkan transaksi');
         } else {
-            return redirect()->back()->with('fail', 'Berhasil membersikan transaksi yang selesai');
+            return redirect()->back()->with('success', 'Berhasil membersikan transaksi yang selesai');
         }
     }
 
@@ -337,5 +337,21 @@ class TransactionController extends Controller
     {
         $words = ['a', 'b', 'ct', 'pl', 'd', 'f', 'x', 'k', 'p', 'z', 'xc', 'r', 'ot', 'qx', 'ws'];
         return strtoupper($words[rand(0, count($words) - 1)] . rand(0, 9) . "$suffix");
+    }
+
+    private function encodeOrderId($order_id)
+    {
+        $string =   "$order_id::" . rand(1, 99999);
+
+        return base64_encode($string);
+    }
+
+    private function decodeOrderId($encodedString)
+    {
+        $string     =    base64_decode($encodedString);
+
+        $arr        =   explode('::', $string);
+
+        return  (int) $arr[0];
     }
 }

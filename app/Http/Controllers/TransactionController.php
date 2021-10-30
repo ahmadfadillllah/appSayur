@@ -97,7 +97,7 @@ class TransactionController extends Controller
 
         $snapToken      =   $this->midtrans($transaction, $order);
 
-        Cart::all()->delete();
+        Cart::truncate();
 
         return redirect()->route('product.pay', [$transaction->id, $snapToken]);
     }
@@ -109,7 +109,7 @@ class TransactionController extends Controller
      */
     public function transactionRedirectionResult(Request $request)
     {
-        $$order_id          =   base64_decode($request->order_id);
+        $order_id          =   base64_decode($request->order_id);
         $status_trf         =   $request->status_trs;
         $transaction_status =   $request->transaction_status;
 

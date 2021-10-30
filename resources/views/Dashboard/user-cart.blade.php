@@ -172,6 +172,10 @@
                     @if (session('fail'))
                         <div class="alert alert-danger">{{ session('fail') }}</div>
                     @endif
+
+                    @if (session('info'))
+                        <div class="alert alert-danger">{{ session('info') }}</div>
+                    @endif
                 </div>
 
                 {{-- begin::content --}}
@@ -208,7 +212,8 @@
                                                 <td>{{ $cart->price }}</td>
                                                 <td>{{ $cart->quantity }}</td>
                                                 <td>
-                                                    <a href="#" class="badge badge-danger">hapus</a>
+                                                    <a href="{{ route('cart.remove', [$cart->id]) }}"
+                                                        class="badge badge-danger">hapus</a>
                                                 </td>
                                             </tr>
                                         @endforeach

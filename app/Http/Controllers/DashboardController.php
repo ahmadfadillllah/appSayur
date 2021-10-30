@@ -134,6 +134,19 @@ class DashboardController extends Controller
         return redirect()->back()->with($data['status'], $data['message']);
     }
 
+    public function removeCart($id)
+    {
+        $user   =   (object) auth()->user();
+
+        $result =   $user->cart()->find($id)->delete();
+
+        if (!$result) {
+            return redirect()->back()->with('success', 'Berhasil menghapus keranjang yang ber-id: ' . $id);
+        } else {
+            return redirect()->back()->with('fail', 'Gagal menghapus keranjang yang ber-id: ' . $id);
+        }
+    }
+
     public function distance(float $lat1, float $lon1, float $lat2, float $lon2, $unit)
     {
         $theta = $lon1 - $lon2;
@@ -155,7 +168,7 @@ class DashboardController extends Controller
 
     public function getLocation($lat, $lon)
     {
-        $dataProduk = Product::all();
+        $dataProduk = Product::where('stock', '>', 0)->get();
 
         $products = [];
 

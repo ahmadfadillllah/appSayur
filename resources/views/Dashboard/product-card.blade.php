@@ -8,7 +8,7 @@
             <!--begin::Heading-->
             <div class="d-flex flex-center mb-2">
                 <!--begin::Badge-->
-                <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3"></span>
+                {{-- <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3"></span> --}}
                 <!--end::Badge-->
                 <!--begin::Title-->
                 <div class="fs-5 fs-lg-3 fw-bolder text-dark">{{ $product->name }}</div>

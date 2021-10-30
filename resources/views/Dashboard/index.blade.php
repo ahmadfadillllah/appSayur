@@ -97,14 +97,6 @@
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
                                             <a class="menu-link nav-link py-3 px-4 px-xxl-6"
-                                                href="{{ route('transactions') }}" data-kt-scroll-toggle="true"
-                                                data-kt-drawer-dismiss="true">Transaksi</a>
-                                            <!--end::Menu link-->
-                                        </div>
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
                                                 href="{{ route('product') }}" data-kt-scroll-toggle="true"
                                                 data-kt-drawer-dismiss="true">Produk Terdekat</a>
                                             <!--end::Menu link-->
@@ -113,8 +105,18 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ route('user.cart') }}"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Keranjang</a>
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                                href="{{ route('transactions') }}" data-kt-scroll-toggle="true"
+                                                data-kt-drawer-dismiss="true">Transaksi</a>
+                                            <!--end::Menu link-->
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin::Menu link-->
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                                href="{{ route('user.cart') }}" data-kt-scroll-toggle="true"
+                                                data-kt-drawer-dismiss="true">Keranjang</a>
                                             <!--end::Menu link-->
                                         </div>
                                     </div>

@@ -81,14 +81,9 @@ class TransactionController extends Controller
 
         $order   =   $user->order()->create($order_data);
 
-        $order_id   =   [
-            'order_id'  =>  $order->id,
-            'created_at' => time(),
-        ];
-
         // data transaksi
         $transaction_data   =   [
-            'order_id'      =>  base64_encode(json_encode($order_id)),
+            'order_id'      =>  $order->id,
             'status_code'   =>  0,
             'status'        =>  'processing',
             'user_id'       =>  $user->id,
@@ -254,8 +249,13 @@ class TransactionController extends Controller
 
         $user       =   (object) auth()->user();
 
-        $transaction_details['order_id']     =   $order->id;
-        $transaction_details['gross_amount'] =   $request->total_harga;
+        $order_id   =   [
+            'order_id'  =>  $order->id,
+            'created_at' => time(),
+        ];
+
+        $transaction_details['order_id']     =  base64_encode(json_encode($order_id))        ;
+        $transaction_details['gross_amount'] =  $request->total_harga;
 
         $billing_address    =   [
             "first_name"    =>  $user->name,

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "964fbcd398b47ac52fdc9f77d11ba803",
+    "content-hash": "22d60c96c5a44a68a61fea7ee9a62312",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -121,6 +121,53 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "cloudmyn/logger",
+            "version": "v0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CloudMyn/Logger.git",
+                "reference": "c3109c9ea8f7c7e5c22837bd8938e0df9da33633"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CloudMyn/Logger/zipball/c3109c9ea8f7c7e5c22837bd8938e0df9da33633",
+                "reference": "c3109c9ea8f7c7e5c22837bd8938e0df9da33633",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CloudMyn\\Logger\\LoggerServiceProvider"
+                    ]
+                },
+                "aliases": {
+                    "Logger": "CloudMyn\\Logger\\Facade\\Logger"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CloudMyn\\Logger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CloudMyn",
+                    "email": "muhabdi47.com@gmail.com"
+                }
+            ],
+            "description": "none",
+            "support": {
+                "issues": "https://github.com/CloudMyn/Logger/issues",
+                "source": "https://github.com/CloudMyn/Logger/tree/v0.0.4"
+            },
+            "time": "2021-10-05T07:57:05+00:00"
         },
         {
             "name": "doctrine/inflector",

@@ -47,6 +47,7 @@ Route::post('/transcation/notification/handling', 'TransactionController@notific
     ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 Route::get('/generate-dumy-data/{amount}', function (int $amount) {
+    // throw new \Exception('asasasa');
     $user = factory(User::class)->create();
     $r = factory(Product::class, $amount)->create();
     dd($user, $r);

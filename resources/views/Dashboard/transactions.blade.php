@@ -202,6 +202,7 @@
                                             <th scope="col">total transaksi</th>
                                             <th scope="col">onkir</th>
                                             <th scope="col">metode pembayaran</th>
+                                            <th scope="col">status</th>
                                             <th scope="col">action</th>
                                         </tr>
                                     </thead>
@@ -212,8 +213,12 @@
                                             @endphp
                                             <tr>
                                                 <td>{{ $order->id }}</td>
-                                                <td>{{ $transaction->price }}</td>
-                                                <td>{{ $transaction->quantity }}</td>
+                                                <td>{{ $transaction->alamat_tujuan }}</td>
+                                                <td>{{ $order->quantity }}</td>
+                                                <td>{{ $transaction->total_transaksi }}</td>
+                                                <td>{{ $order->onkir }}</td>
+                                                <td>{{ $transaction->metode_pembayaran }}</td>
+                                                <td>{{ $transaction->status }}</td>
                                                 <td>
                                                     <a href="#" class="badge badge-danger">hapus</a>
                                                 </td>

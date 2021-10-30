@@ -222,8 +222,10 @@ class TransactionController extends Controller
                 $data['status_code']    =   2;
             }
 
+            $transaction_model    =   Transaction::where('order_id', $order_id)->first();
+
             if ($data['status_code'] === 3) {
-                $order      =   $transaction->order;
+                $order      =   $transaction_model->order;
                 $products   =   json_decode($order->products);
                 foreach ($products as $product_data) {
                     $product = Product::find($product_data->id);
@@ -234,9 +236,8 @@ class TransactionController extends Controller
                 }
             }
 
-            $transaction    =   Transaction::where('order_id', $order_id)->first();
 
-            $transaction->update($data);
+            $transaction_model->update($data);
 
             Log::info('Transaksi selesai dengan status: ' . $transaction);
         } catch (\Throwable $th) {
@@ -325,9 +326,9 @@ class TransactionController extends Controller
             $result = $user->transactions()->delete();
 
         if (!$result) {
-            return redirect()->back()->with('fail', 'Gagal membersihkan transaksi');
+            return redirect()->back()->with('fail', 'Gagal membersihkan transaksi!');
         } else {
-            return redirect()->back()->with('success', 'Berhasil membersikan transaksi yang selesai');
+            return redirect()->back()->with('success', 'Berhasil membersikan transaksi!');
         }
     }
 

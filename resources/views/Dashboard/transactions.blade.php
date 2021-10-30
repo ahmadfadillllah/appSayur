@@ -191,12 +191,13 @@
                             <div class="card-body p-4">
                                 <h3 class="card-title text-secondary text-bold"><i class="fa fa-money-bill"
                                         style="font-size: 20px"></i> Daftar transaksi</h3>
-                                <hr class="mt-3">
+                                <hr class="mt-4">
 
                                 <table class="table table-striped text-center">
                                     <thead>
                                         <tr>
                                             <th scope="col">order id</th>
+                                            <th scope="col">fullname</th>
                                             <th scope="col">alamat tujuan</th>
                                             <th scope="col">jumlah barang</th>
                                             <th scope="col">total transaksi</th>
@@ -213,6 +214,9 @@
                                             @endphp
                                             <tr>
                                                 <td>{{ $order->id }}</td>
+                                                <td>
+                                                    {{ $transaction->first_name . ' ' . $transaction->last_name }}
+                                                </td>
                                                 <td>{{ $transaction->alamat_tujuan }}</td>
                                                 <td>{{ $order->quantity }}</td>
                                                 <td>{{ $transaction->total_transaksi }}</td>

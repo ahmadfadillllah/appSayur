@@ -187,7 +187,7 @@
                             <div class="card-body p-4">
                                 <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart"
                                         style="font-size: 20px"></i> Keranjang</h3>
-                                <hr class="mt-3">
+                                <hr class="mt-4">
 
                                 <table class="table table-striped text-center">
                                     <thead>

@@ -108,6 +108,16 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <label class="form-label fw-bolder text-dark fs-6">Nomor telpon</label>
+                            @error('nomor_telp')
+                                <div class="text-muted">{{ $message }}</div>
+                            @enderror
+                            <input class="form-control form-control-lg form-control-solid" type="tezt"
+                                placeholder="08123456789" name="nomor_telp" autocomplete="off" />
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
                         <div class="mb-10 fv-row" data-kt-password-meter="true">
                             <!--begin::Wrapper-->
                             <div class="mb-1">

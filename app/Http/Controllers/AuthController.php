@@ -32,6 +32,7 @@ class AuthController extends Controller
     {
 
         $request->validate([
+            'nomor_telp' => ['required', 'min:3', 'max:20'],
             'kota' => ['required', 'string', 'min:2', 'max:40'],
             'alamat' => ['required', 'string', 'min:2', 'max:120'],
             'postal_code' => ['required', 'string', 'min:2', 'max:20'],
@@ -55,6 +56,7 @@ class AuthController extends Controller
         $user->postal_code = $request->postal_code;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->nomor_telp = $request->nomor_telp;
         $user->role = 'Seller';
         $user->save();
 

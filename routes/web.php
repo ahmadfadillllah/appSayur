@@ -34,10 +34,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/transaction', 'TransactionController@transactionRedirectionResult');
 
-    Route::post('/transcation/notification/handling', 'TransactionController@notification');
-
     Route::post('/product/checkout', 'TransactionController@checkout')->name('product.checkout.beli');
 });
+
+Route::post('/transcation/notification/handling', 'TransactionController@notification')
+    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 Route::get('/generate-dumy-data/{amount}', function (int $amount) {
     $user = factory(User::class)->create();

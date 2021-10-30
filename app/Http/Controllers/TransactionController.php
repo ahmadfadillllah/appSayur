@@ -85,7 +85,7 @@ class TransactionController extends Controller
         $transaction_data   =   [
             'order_id'      =>  $order->id,
             'status_code'   =>  0,
-            'status'        =>  'unfinish',
+            'status'        =>  'processing',
             'user_id'       =>  $user->id,
             'lat_lon'       =>  $request->lat_lon,
             'expired_at'    =>  now()->addDay(),
@@ -96,6 +96,8 @@ class TransactionController extends Controller
         $transaction    =   Transaction::create(array_merge($shipping_address, $transaction_data));
 
         $snapToken      =   $this->midtrans($transaction, $order);
+
+        Cart::all()->delete();
 
         return redirect()->route('product.pay', [$transaction->id, $snapToken]);
     }
@@ -108,56 +110,111 @@ class TransactionController extends Controller
     public function transactionRedirectionResult(Request $request)
     {
         $order_id           =   $request->order_id;
-        $status_code        =   $request->status_code;
+        $status_trf         =   $request->status_trs;
         $transaction_status =   $request->transaction_status;
 
-        $checkout   =   Transaction::where('order_id', $order_id)->first();
+        $transaction    =   Transaction::where('order_id', $order_id)->first();
 
-        // $checkout_status    =   $checkout->status;
+        $status_code    =   0;
 
-        dd($_POST, $request, $checkout);
+        switch ($transaction_status) {
+            case 'pending':
+                $status_code = 0;
+            case 'authorize':
+                $status_code = 0;
+                break;
+            case 'deny':
+                $status_code = 2;
+            case 'expire':
+                $status_code = 2;
+            case 'cancel':
+                $status_code = 2;
+                break;
+            case 'capture':
+                $status_code = 3;
+            case 'settlement':
+                $status_code = 3;
+                break;
+            case 'refund':
+                $status_code = 4;
+            case 'partial_refund':
+                $status_code = 4;
+                break;
+        }
+
+        $transaction->update([
+            'status'        =>  $transaction_status,
+            'status_code'   =>  $status_code,
+        ]);
+
+        if ($status_trf === 'finish') {
+            $msg = 'Transaksi sedang diproses, silahkan tunggu beberapa saat dan lakukan refresh pada halaman';
+        } else if ($status_trf === 'unfinish') {
+            $msg = 'Transaksi tidak dapat diselesaikan!';
+        } else {
+            $msg = 'Transaksi gagal!';
+        }
+
+        return redirect()->route('transactions')->with('info', $msg);
+    }
+
+    public function transactions()
+    {
+        $user   =   (object) auth()->user();
+
+        return view('Dashboard.transactions', [
+            'user'  =>  $user,
+            'transactions' => $user->transactions,
+        ]);
     }
 
     public function notification()
     {
         \Midtrans\Config::$isProduction = false;
         \Midtrans\Config::$serverKey = config('app.midtrans.server_key');
+
         $notif = new \Midtrans\Notification();
 
-        $transaction = $notif->transaction_status;
-        $type = $notif->payment_type;
-        $order_id = $notif->order_id;
-        $fraud = $notif->fraud_status;
+        $transaction    =   $notif->transaction_status;
+        $type           =   $notif->payment_type;
+        $order_id       =   $notif->order_id;
+        $fraud_status   =   $notif->fraud_status;
+        $gross_amount   =   $notif->gross_amount;
+        $currency       =   $notif->currency;
+        $currency       =   $notif->currency;
+        $approval_code  =   $notif->approval_code;
+        $bank           =   $notif->bank;
+        $eci            =   $notif->eci;
+        $va_number      =   json_encode($notif->va_numbers ?? []);
+        $store          =   $notif->store;
+        $masked_card    =   $notif->masked_card;
 
-        Log::info("Transaction status {$transaction} : order id {$order_id}");
+        $data   =   [
+            'fraud_status'  =>  $fraud_status,
+            'gross_amount'  =>  $gross_amount,
+            'currency'      =>  $currency,
+            'bank'          =>  $bank,
+            'va_number'     =>  $va_number,
+            'store'         =>  $store,
+            'masked_card'   =>  $masked_card,
+            'eci'           =>  $eci,
+            'approval_code' =>  $approval_code,
+            'status'        =>  $transaction,
+            'metode_pembayaran' => $type,
+        ];
 
         if ($transaction == 'capture') {
-            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-            if ($type == 'credit_card') {
-                if ($fraud == 'challenge') {
-                    // TODO set payment status in merchant's database to 'Challenge by FDS'
-                    // TODO merchant should decide whether this transaction is authorized or not in MAP
-                    echo "Transaction order_id: " . $order_id . " is challenged by FDS";
-                } else {
-                    // TODO set payment status in merchant's database to 'Success'
-                    echo "Transaction order_id: " . $order_id . " successfully captured using " . $type;
-                }
-            }
+            $data['status_code']    =   3;
         } else if ($transaction == 'settlement') {
-            // TODO set payment status in merchant's database to 'Settlement'
-            echo "Transaction order_id: " . $order_id . " successfully transfered using " . $type;
+            $data['status_code']    =   3;
         } else if ($transaction == 'pending') {
-            // TODO set payment status in merchant's database to 'Pending'
-            echo "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+            $data['status_code']    =   1;
         } else if ($transaction == 'deny') {
-            // TODO set payment status in merchant's database to 'Denied'
-            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+            $data['status_code']    =   2;
         } else if ($transaction == 'expire') {
-            // TODO set payment status in merchant's database to 'expire'
-            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.";
+            $data['status_code']    =   2;
         } else if ($transaction == 'cancel') {
-            // TODO set payment status in merchant's database to 'Denied'
-            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is canceled.";
+            $data['status_code']    =   2;
         }
     }
 

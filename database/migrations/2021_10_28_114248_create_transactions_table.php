@@ -31,8 +31,6 @@ class CreateTransactionsTable extends Migration
             $table->string('status');
             $table->smallInteger('status_code')
                 ->comment('1 = pending|authorize, 2 = deny|cancel|expire, 3 = capture|settlement, 4 = refund|partial_refund');
-            $table->timestamp('expired_at');
-            $table->timestamps();
 
             // Misc
             $table->string('fraud_status')->nullable();
@@ -41,7 +39,7 @@ class CreateTransactionsTable extends Migration
 
             // Bank
             $table->string('bank')->nullable();
-            $table->integer('va_number')->nullable();
+            $table->json('va_number')->nullable();
 
             // Store
             $table->string('store')->nullable();
@@ -61,6 +59,9 @@ class CreateTransactionsTable extends Migration
             $table->string('nomor_telp');
             $table->string('lat_lon');
             $table->string('country_code')->default('IDN');
+
+            $table->timestamp('expired_at');
+            $table->timestamps();
         });
     }
 

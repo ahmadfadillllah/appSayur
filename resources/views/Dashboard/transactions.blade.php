@@ -4,13 +4,13 @@
 
 <head>
     <base href="">
-    <title>User checkouts</title>
+    <title>Transaksi - {{ $user->name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!--end::Fonts-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('admin/dist/assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet"
@@ -27,19 +27,6 @@
 
     <link rel="stylesheet" href="{{ asset('css/product.css') }}">
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer>
-    </script>
-
-
-    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="SB-Mid-client-YCHtULs46ydSA7tV"></script>
-    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
 
     <!--end::Global Stylesheets Bundle-->
 </head>
@@ -109,7 +96,7 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link active py-3 px-4 px-xxl-6"
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
                                                 href="{{ route('dashboard') }}" data-kt-scroll-toggle="true"
                                                 data-kt-drawer-dismiss="true">Home</a>
                                             <!--end::Menu link-->
@@ -127,14 +114,15 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#transaksi"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Transaksi</a>
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                                href="{{ route('transactions') }}" data-kt-scroll-toggle="true"
+                                                data-kt-drawer-dismiss="true">Transaksi</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                            <a class="menu-link active nav-link py-3 px-4 px-xxl-6"
                                                 href="{{ route('user.cart') }}" data-kt-scroll-toggle="true"
                                                 data-kt-drawer-dismiss="true">Keranjang</a>
                                             <!--end::Menu link-->
@@ -176,137 +164,75 @@
             <!--begin::Container-->
             <div class="container">
 
-                {{-- begin::content --}}
+                <div class="mt-2 mb-17">
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
 
+                    @if (session('fail'))
+                        <div class="alert alert-danger">{{ session('fail') }}</div>
+                    @endif
+
+                    @if (session('warn'))
+                        <div class="alert alert-warning">{{ session('warn') }}</div>
+                    @endif
+
+                    @if (session('info'))
+                        <div class="alert alert-info">{{ session('info') }}</div>
+                    @endif
+                </div>
+
+                {{-- begin::content --}}
                 <div class="row">
 
-                    <div class="col-md-5">
-                        <div class="card text-dark bg-light mb-2 mt-2">
-                            <div class="card-body p-3">
+                    <div class="col-md-8">
+
+                        <div class="card text-dark bg-light">
+                            <div class="card-body p-4">
                                 <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart"
-                                        style="font-size: 20px"></i> Detail pesanan</h3>
+                                        style="font-size: 20px"></i> Keranjang</h3>
                                 <hr class="mt-3">
 
-                                @php
-                                    $total_harga = $order->price;
-                                    $qty = $order->quantity;
-                                @endphp
-
-                                @foreach ($products as $product)
-                                    <div class="cart-products">
-                                        <div class="card-product">
-                                            <img src="{{ $product->image }}" alt="img" width="100px">
-                                            <div class="card-info">
-                                                <div>
-                                                    <h5>{{ $product->name }}(x{{ $product->qty }})</h5>
-                                                    <h6>Stock {{ $product->stock }}</h6>
-                                                    <h6>QTY {{ $product->qty }}</h6>
-                                                </div>
-                                                <div class="text-end">
-                                                    <b class="d-block">RP.
-                                                        {{ $product->price }}(x{{ $product->qty }})</b>
-                                                    <hr class="mt-2 mb-1">
-                                                    <b class="d-block">RP.
-                                                        {{ (int) $product->price * (int) $product->qty }}</b>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                                <div class="mt-2 d-flex justify-content-between px-2">
-                                    <h5>Total Harga Barang</h5>
-                                    <b>RP. {{ $total_harga }}</b>
-                                </div>
-
-                                <div class="mt-2 d-flex justify-content-between px-2">
-                                    <h5>Onkos kirim</h5>
-                                    <b>RP. {{ $order->onkir }}</b>
-                                </div>
-
-                                <hr class="mt-2">
-
-                                <div class="d-flex justify-content-between px-2">
-                                    <h5>Total</h5>
-                                    <b>RP. {{ $total_harga + $order->onkir }}</b>
-                                </div>
-
+                                <table class="table table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">order id</th>
+                                            <th scope="col">alamat tujuan</th>
+                                            <th scope="col">jumlah barang</th>
+                                            <th scope="col">total transaksi</th>
+                                            <th scope="col">onkir</th>
+                                            <th scope="col">metode pembayaran</th>
+                                            <th scope="col">action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($transactions as $transaction)
+                                            @php
+                                                $order = $transaction->order;
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $order->id }}</td>
+                                                <td>{{ $transaction->price }}</td>
+                                                <td>{{ $transaction->quantity }}</td>
+                                                <td>
+                                                    <a href="#" class="badge badge-danger">hapus</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-7">
-                        <div class="card text-dark bg-light mb-2 mt-2">
-                            <div class="card-body p-3">
-                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-user"
-                                        style="font-size: 20px"></i> Data Pembeli</h3>
-                                <hr class="mt-3">
-
-                                <div>
-
-                                    <div class="mb-3">
-                                        <label for="first_name" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" id="first_name" disabled
-                                            value="{{ $transaction->first_name }}">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="last_name" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" id="last_name" disabled
-                                            value="{{ $transaction->last_name }}">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="noxtel" class="form-label">Nomor telpone</label>
-                                        <input type="text" class="form-control" id="noxtel" disabled
-                                            value="{{ $transaction->nomor_telp }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email"
-                                            value="{{ $transaction->email }}" disabled>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat</label>
-                                        <input type="text" class="form-control" id="alamat"
-                                            value="{{ $transaction->alamat_tujuan }}" disabled>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="postal_code" class="form-label">Code Pos</label>
-                                        <input type="text" class="form-control" id="postal_code"
-                                            value="{{ $transaction->postal_code }}" disabled>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="city" class="form-label">Kota</label>
-                                        <input type="text" class="form-control" id="city"
-                                            value="{{ $transaction->city }}" disabled>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="status" class="form-label">status</label>
-                                        <input type="text" class="form-control" disabled
-                                            value="@if ($transaction->status == 0) pending @else berhasil @endif">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="note" class="form-label">Catatan</label>
-                                        <textarea class="form-control" id="note" rows="3"
-                                            disabled>{{ $order->catatan }}</textarea>
-                                    </div>
-
-                                    <button type="button" id="pay-button" data-token="{{ $snap_token }}"
-                                        class="btn btn-primary btn-sm">
-                                        Pay
+                            <div class="card-footer p-3">
+                                <form method="POST" action="{{ route('cart.clear') }}" class="d-flex">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm" style="margin-left: 5px">
+                                        Bersihkan transaksi
                                     </button>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 {{-- end::content --}}
 
@@ -318,7 +244,6 @@
                     <!--end::Slider button-->
                 </div>
                 <!--end::Product slider-->
-
             </div>
             <!--end::Container-->
         </div>
@@ -344,52 +269,6 @@
         <!--end::Scrolltop-->
     </div>
     <!--end::Main-->
-    <!--begin::Javascript-->
-    <!--begin::Global Javascript Bundle(used by all pages)-->
-
-
-
-    <script type="text/javascript">
-        // For example trigger on button clicked, or any time you need
-        var payButton = document.getElementById('pay-button');
-
-        payButton.addEventListener('click', function() {
-            // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
-            let token = payButton.dataset.token;
-            console.log(token);
-            window.snap.pay(token);
-            // customer will be redirected after completing payment pop-up
-        });
-
-
-        window.snap.pay('SNAP_TRANSACTION_TOKEN', {
-            onSuccess: function(result) {
-                /* You may add your own implementation here */
-                alert("payment success!");
-                console.log(result);
-            },
-            onPending: function(result) {
-                /* You may add your own implementation here */
-                alert("wating your payment!");
-                console.log(result);
-            },
-            onError: function(result) {
-                /* You may add your own implementation here */
-                alert("payment failed!");
-                console.log(result);
-            },
-            onClose: function() {
-                /* You may add your own implementation here */
-                alert('you closed the popup without finishing the payment');
-            }
-        });
-    </script>
-
-    <script src="{{ asset('admin/dist/assets') }}/js/location.js"></script>
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{{ asset('admin/dist/assets') }}/plugins/custom/fslightbox/fslightbox.bundle.js"></script>
-    <script src="{{ asset('admin/dist/assets') }}/plugins/custom/typedjs/typedjs.bundle.js"></script>
 
 </body>
 <!--end::Body-->

@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/transaction', 'TransactionController@transactionRedirectionResult');
 
+    Route::get('transactions', 'TransactionController@transactions')->name('transactions');
+
     Route::post('/product/checkout', 'TransactionController@checkout')->name('product.checkout.beli');
 });
 

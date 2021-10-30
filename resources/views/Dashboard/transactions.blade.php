@@ -227,21 +227,21 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer p-3">
+                            <div class="card-footer p-3" style="display: flex; flex-direction: row">
                                 <form method="POST" action="{{ route('transaction.clear', ['no']) }}"
                                     class="d-flex">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" style="margin-left: 5px">
-                                        Bersihkan transaksi
+                                        Bersihkan transaksi yang berhasil
                                     </button>
                                 </form>
                                 <form method="POST" action="{{ route('transaction.clear', ['all']) }}"
-                                    class="d-flex">
+                                    class="d-flex ml-2">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" style="margin-left: 5px">
-                                        Bersihkan transaksi
+                                        Bersihkan semua transaksi
                                     </button>
                                 </form>
                             </div>

@@ -7,6 +7,7 @@ use App\Order;
 use App\Product;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
 
 class TransactionController extends Controller
@@ -84,7 +85,7 @@ class TransactionController extends Controller
         $transaction_data   =   [
             'order_id'      =>  $order->id,
             'status_code'   =>  0,
-            'status'        =>  'pending',
+            'status'        =>  'unfinish',
             'user_id'       =>  $user->id,
             'lat_lon'       =>  $request->lat_lon,
             'expired_at'    =>  now()->addDay(),
@@ -127,6 +128,8 @@ class TransactionController extends Controller
         $type = $notif->payment_type;
         $order_id = $notif->order_id;
         $fraud = $notif->fraud_status;
+
+        Log::info("Transaction status {$transaction} : order id {$order_id}");
 
         if ($transaction == 'capture') {
             // For credit card transaction, we need to check whether transaction is challenge by FDS or not

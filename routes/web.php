@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/transaction', 'TransactionController@transactionRedirectionResult');
 
-    Route::get('/transcation/notification/handling', 'TransactionController@notification');
+    Route::post('/transcation/notification/handling', 'TransactionController@notification');
 
     Route::post('/product/checkout', 'TransactionController@checkout')->name('product.checkout.beli');
 });

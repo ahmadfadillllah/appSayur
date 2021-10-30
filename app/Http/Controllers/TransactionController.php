@@ -109,12 +109,11 @@ class TransactionController extends Controller
      */
     public function transactionRedirectionResult(Request $request)
     {
-        $json_data          =   base64_decode($request->order_id);
-        $data               =   json_decode($json_data);
+        $$order_id          =   base64_decode($request->order_id);
         $status_trf         =   $request->status_trs;
         $transaction_status =   $request->transaction_status;
 
-        $transaction    =   Transaction::where('order_id', $data['order_id'])->first();
+        $transaction    =   Transaction::where('order_id', $order_id)->first();
 
         $status_code    =   0;
 
@@ -249,12 +248,7 @@ class TransactionController extends Controller
 
         $user       =   (object) auth()->user();
 
-        $order_id   =   [
-            'order_id'  =>  $order->id,
-            'created_at' => time(),
-        ];
-
-        $transaction_details['order_id']     =  base64_encode(json_encode($order_id))        ;
+        $transaction_details['order_id']     =  base64_encode($order->id);
         $transaction_details['gross_amount'] =  $request->total_harga;
 
         $billing_address    =   [

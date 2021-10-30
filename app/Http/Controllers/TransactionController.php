@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Order;
 use App\Product;
 use App\Transaction;
 use Illuminate\Http\Request;
@@ -13,13 +14,21 @@ class TransactionController extends Controller
 
     public function productPay($id, $snap_token)
     {
-        $checkout   =   Transaction::find($id);
+        $user           =   (object) auth()->user();
 
-        return view('Dashboard.product-pay', [
-            'checkout'      =>  $checkout,
-            'product'       =>  $checkout->product,
+        $transaction    =   Transaction::find($id);
+
+        $order          =   $transaction->order;
+
+        $data   =   [
+            'transaction'   =>  $transaction,
+            'carts'         =>  $user->cart,
+            'order'         =>  $order,
+            'products'      =>  array_values(json_decode($order->products)),
             'snap_token'    =>  $snap_token,
-        ]);
+        ];
+
+        return view('Dashboard.product-pay', $data);
     }
 
     /**
@@ -34,13 +43,7 @@ class TransactionController extends Controller
 
         $this->validateCheckout();
 
-        $product    =   Product::find($request->product_id);
-
-        if (!$product) return redirect()->back();
-
         $user       =   (object) auth()->user();
-
-        $order_id   =   $this->randId(uniqid($request->product_id));
 
         // alamat dan data pengiriman produk
         $shipping_address   = [
@@ -53,18 +56,36 @@ class TransactionController extends Controller
             'email'         =>  $request->email,
         ];
 
+        $carts      =   $user->cart;
+        $products   =   [];
+
+        foreach ($carts as $cart) {
+            $products_['name']   =   $cart->name;
+            $products_['price']  =   $cart->price;
+            $products_['qty']    =   $cart->quantity;
+            $products_['id']     =   $cart->product_id;
+            $products_['image']  =   $cart->product->getImage();
+            $products_['stock']  =   $cart->product->stock;
+
+            $products[] =   $products_;
+        }
+
+        $order_data =   [
+            'products'  =>  json_encode($products),
+            'price'     =>  $request->total_harga,
+            'quantity'  =>  $request->qty,
+            'onkir'     =>  $request->onkir,
+            'catatan'   =>  $request->note,
+        ];
+
+        $order   =   $user->order()->create($order_data);
+
         // data transaksi
         $transaction_data   =   [
-            'order_id'      =>  $order_id,
+            'order_id'      =>  $order->id,
             'status_code'   =>  0,
             'status'        =>  'pending',
-            'catatan'       =>  $request->note,
-            'product_id'    =>  $product->id,
-            'qty'           =>  $request->qty,
-            'onkir'         =>  $request->onkir,
-            'harga_produk'  =>  $product->price,
-            'pembeli_id'    =>  $user->id,
-            'penjual_id'    =>  $product->user_id,
+            'user_id'       =>  $user->id,
             'lat_lon'       =>  $request->lat_lon,
             'expired_at'    =>  now()->addDay(),
             'total_transaksi' =>  $request->total_harga,
@@ -73,7 +94,7 @@ class TransactionController extends Controller
 
         $transaction    =   Transaction::create(array_merge($shipping_address, $transaction_data));
 
-        $snapToken      =   $this->midtrans($product, $transaction, $order_id);
+        $snapToken      =   $this->midtrans($transaction, $order);
 
         return redirect()->route('product.pay', [$transaction->id, $snapToken]);
     }
@@ -138,7 +159,7 @@ class TransactionController extends Controller
     }
 
 
-    private function midtrans(Product $product, Transaction $checkout, $order_id)
+    private function midtrans(Transaction $transaction, Order $order)
     {
         $request    =   request();
 
@@ -153,7 +174,7 @@ class TransactionController extends Controller
 
         $user       =   (object) auth()->user();
 
-        $transaction_details['order_id']     =   $order_id;
+        $transaction_details['order_id']     =   $order->id;
         $transaction_details['gross_amount'] =   $request->total_harga;
 
         $billing_address    =   [
@@ -187,13 +208,15 @@ class TransactionController extends Controller
             "shipping_address"  =>  $shipping_address,
         ];
 
-        $items  =   $user->cart()->get(['id', 'name', 'price', 'quantity']);
+        $items  =   $user->cart()->get(['id', 'name', 'price', 'quantity'])->toArray();
 
         $items  =   array_merge($items, [
-            'id'    =>   $this->randId($product->id),
-            'name'  =>  'Onkos kirim',
-            'price' =>  $checkout->onkir,
-            'quantity'  =>  1,
+            [
+                'id'    =>  $this->randId('0NK1R'),
+                'name'  =>  'Onkos kirim',
+                'price' =>  $order->onkir,
+                'quantity'  =>  1,
+            ]
         ]);
 
         $params = [
@@ -217,7 +240,6 @@ class TransactionController extends Controller
             'lat_lon'       =>  ['required'],
             'note'          =>  ['nullable'],
             'alamat'        =>  ['required', 'string'],
-            'product_id'    =>  ['required', 'integer'],
             'qty'           =>  ['required', 'integer'],
             'onkir'         =>  ['required', 'integer'],
             'total_harga'   =>  ['required', 'integer'],

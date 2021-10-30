@@ -16,17 +16,18 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
+            // $table->foreignId('product_id');
+            // $table->foreignId('penjual_id');
+            // $table->text('catatan')->nullable();
+            // $table->integer('harga_produk');
+            // $table->integer('qty');
+            // $table->integer('onkir');
+
             // General field
-            $table->foreignId('product_id');
-            $table->foreignId('pembeli_id');
-            $table->foreignId('penjual_id');
-            $table->string('order_id')->unique();
-            $table->text('catatan')->nullable();
+            $table->foreignId('user_id');
+            $table->foreignId('order_id');
             $table->string('metode_pembayaran')->nullable();
-            $table->integer('harga_produk');
             $table->string('total_transaksi');
-            $table->integer('qty');
-            $table->integer('onkir');
             $table->string('status');
             $table->smallInteger('status_code')
                 ->comment('1 = pending|authorize, 2 = deny|cancel|expire, 3 = capture|settlement, 4 = refund|partial_refund');

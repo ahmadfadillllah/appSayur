@@ -127,8 +127,16 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#keranjang"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Keranjang</a>
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#transaksi"
+                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Transaksi</a>
+                                            <!--end::Menu link-->
+                                        </div>
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin::Menu link-->
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                                href="{{ route('user.cart') }}" data-kt-scroll-toggle="true"
+                                                data-kt-drawer-dismiss="true">Keranjang</a>
                                             <!--end::Menu link-->
                                         </div>
                                     </div>
@@ -176,42 +184,51 @@
                         <div class="card text-dark bg-light mb-2 mt-2">
                             <div class="card-body p-3">
                                 <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart"
-                                        style="font-size: 20px"></i> Detail Pesanan
-
-                                </h3>
+                                        style="font-size: 20px"></i> Detail pesanan</h3>
                                 <hr class="mt-3">
 
-                                <div class="cart-products">
-                                    <div class="card-product">
-                                        <img src="{{ $product->getImage() }}" alt="img" width="100px">
-                                        <div class="card-info">
-                                            <div>
-                                                <h5>{{ $product->name }}</h5>
-                                                <h6>Stock {{ $product->stock }}</h6>
-                                                <h6>QTY {{ $checkout->qty }}</h6>
-                                            </div>
-                                            <div>
-                                                <b>RP. {{ $product->price }}</b>
+                                @php
+                                    $total_harga = $order->price;
+                                    $qty = $order->quantity;
+                                @endphp
+
+                                @foreach ($products as $product)
+                                    <div class="cart-products">
+                                        <div class="card-product">
+                                            <img src="{{ $product->image }}" alt="img" width="100px">
+                                            <div class="card-info">
+                                                <div>
+                                                    <h5>{{ $product->name }}(x{{ $product->qty }})</h5>
+                                                    <h6>Stock {{ $product->stock }}</h6>
+                                                    <h6>QTY {{ $product->qty }}</h6>
+                                                </div>
+                                                <div class="text-end">
+                                                    <b class="d-block">RP.
+                                                        {{ $product->price }}(x{{ $product->qty }})</b>
+                                                    <hr class="mt-2 mb-1">
+                                                    <b class="d-block">RP.
+                                                        {{ (int) $product->price * (int) $product->qty }}</b>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
 
                                 <div class="mt-2 d-flex justify-content-between px-2">
-                                    <h5>Barang(x{{ $checkout->qty }})</h5>
-                                    <b>RP. {{ $product->price * $checkout->qty }}</b>
+                                    <h5>Total Harga Barang</h5>
+                                    <b>RP. {{ $total_harga }}</b>
                                 </div>
 
                                 <div class="mt-2 d-flex justify-content-between px-2">
                                     <h5>Onkos kirim</h5>
-                                    <b>RP. {{ $checkout->onkir }}</b>
+                                    <b>RP. {{ $order->onkir }}</b>
                                 </div>
 
                                 <hr class="mt-2">
 
                                 <div class="d-flex justify-content-between px-2">
                                     <h5>Total</h5>
-                                    <b>RP. {{ $product->price * $checkout->qty + $checkout->onkir }}</b>
+                                    <b>RP. {{ $total_harga + $order->onkir }}</b>
                                 </div>
 
                             </div>
@@ -230,54 +247,54 @@
                                     <div class="mb-3">
                                         <label for="first_name" class="form-label">First Name</label>
                                         <input type="text" class="form-control" id="first_name" disabled
-                                            value="{{ $checkout->first_name }}">
+                                            value="{{ $transaction->first_name }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="last_name" class="form-label">Last Name</label>
                                         <input type="text" class="form-control" id="last_name" disabled
-                                            value="{{ $checkout->last_name }}">
+                                            value="{{ $transaction->last_name }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="noxtel" class="form-label">Nomor telpone</label>
                                         <input type="text" class="form-control" id="noxtel" disabled
-                                            value="{{ $checkout->nomor_telp }}">
+                                            value="{{ $transaction->nomor_telp }}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email"
-                                            value="{{ $checkout->email }}" disabled>
+                                            value="{{ $transaction->email }}" disabled>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="alamat" class="form-label">Alamat</label>
                                         <input type="text" class="form-control" id="alamat"
-                                            value="{{ $checkout->alamat_tujuan }}" disabled>
+                                            value="{{ $transaction->alamat_tujuan }}" disabled>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="postal_code" class="form-label">Code Pos</label>
                                         <input type="text" class="form-control" id="postal_code"
-                                            value="{{ $checkout->postal_code }}" disabled>
+                                            value="{{ $transaction->postal_code }}" disabled>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="city" class="form-label">Kota</label>
                                         <input type="text" class="form-control" id="city"
-                                            value="{{ $checkout->city }}" disabled>
+                                            value="{{ $transaction->city }}" disabled>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="status" class="form-label">status</label>
                                         <input type="text" class="form-control" disabled
-                                            value="@if ($checkout->status == 0) pending @else berhasil @endif">
+                                            value="@if ($transaction->status == 0) pending @else berhasil @endif">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="note" class="form-label">Catatan</label>
                                         <textarea class="form-control" id="note" rows="3"
-                                            disabled>{{ $checkout->catatan }}</textarea>
+                                            disabled>{{ $order->catatan }}</textarea>
                                     </div>
 
                                     <button type="button" id="pay-button" data-token="{{ $snap_token }}"

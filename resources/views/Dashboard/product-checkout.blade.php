@@ -4,7 +4,7 @@
 
 <head>
     <base href="">
-    <title>Checkout Produk - {{ $product->name }}</title>
+    <title>Checkout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('admin/dist/assets') }}/media/logos/favicon.ico" />
@@ -130,8 +130,9 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="{{ route('user.cart') }}"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Keranjang</a>
+                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6"
+                                                href="{{ route('user.cart') }}" data-kt-scroll-toggle="true"
+                                                data-kt-drawer-dismiss="true">Keranjang</a>
                                             <!--end::Menu link-->
                                         </div>
                                     </div>
@@ -184,12 +185,14 @@
 
                                 @php
                                     $total_harga = 0;
+                                    $qty = 0;
                                 @endphp
 
                                 @foreach ($carts as $cart)
                                     @php
                                         $cart_product = $cart->product;
-                                        $total_harga += $cart->price;
+                                        $total_harga += (int) $cart->price * (int) $cart->quantity;
+                                        $qty += (int) $cart->quantity;
                                     @endphp
                                     <div class="cart-products">
                                         <div class="card-product">
@@ -258,10 +261,6 @@
                                 <form method="POST" action="{{ route('product.checkout.beli') }}">
                                     @method('POST')
                                     @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    @error('product_id')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
                                     <input type="hidden" name="qty" value="{{ $qty }}">
                                     @error('qty')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -270,8 +269,7 @@
                                     @error('onkir')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
-                                    <input type="hidden" name="total_harga"
-                                        value="{{ $product->price * $qty + $onkir }}">
+                                    <input type="hidden" name="total_harga" value="{{ $total_harga }}">
                                     @error('total_harga')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror

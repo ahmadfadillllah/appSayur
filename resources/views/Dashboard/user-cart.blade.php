@@ -164,8 +164,19 @@
             <!--begin::Container-->
             <div class="container">
 
+                <div class="mt-2 mb-17">
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+                    @if (session('fail'))
+                        <div class="alert alert-danger">{{ session('fail') }}</div>
+                    @endif
+                </div>
+
                 {{-- begin::content --}}
                 <div class="row">
+
                     <div class="col-md-8">
 
                         <div class="card text-dark bg-light">
@@ -203,12 +214,15 @@
                                 </table>
                             </div>
                             <div class="card-footer p-3">
-                                <div class="d-flex">
+                                <form method="POST" action="{{ route('cart.clear') }}" class="d-flex">
+                                    @method('DELETE')
+                                    @csrf
                                     <a href="{{ route('product.checkout') }}" class="btn btn-primary btn-sm" disabled
                                         id="checkout-btn">Checkout</a>
-                                    <a href="#" class="btn btn-danger btn-sm" style="margin-left: 5px">Bersihkan
-                                        keranjang</a>
-                                </div>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        style="margin-left: 5px">Bersihkan
+                                        keranjang</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -251,6 +265,7 @@
 
     <script>
         getLatLon();
+
         function getLatLon() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {

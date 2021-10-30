@@ -24,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/add-to-cart', 'DashboardController@addToCart')->name('product.add');
 
+    Route::delete('/clear/cart', 'DashboardController@clearCart')->name('cart.clear');
+
     Route::get('/cart', 'DashboardController@cart')->name('user.cart');
 
     Route::get('/product/order', 'DashboardController@checkoutPage')->name('product.checkout');

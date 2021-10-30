@@ -217,7 +217,7 @@
                                                 <td>{{ $order->quantity }}</td>
                                                 <td>{{ $transaction->total_transaksi }}</td>
                                                 <td>{{ $order->onkir }}</td>
-                                                <td>{{ $transaction->metode_pembayaran }}</td>
+                                                <td>{{ $transaction->metode_pembayaran ?? '-' }}</td>
                                                 <td>{{ $transaction->status }}</td>
                                                 {{-- <td>
                                                     <a href="#" class="badge badge-danger">hapus</a>

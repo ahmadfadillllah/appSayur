@@ -6,7 +6,7 @@
             <img src="{{ $product->getImage() }}" class="mh-200px mb-9" alt="" />
             <!--end::Illustration-->
             <!--begin::Heading-->
-            <div class="d-flex flex-center mb-5">
+            <div class="d-flex flex-center mb-2">
                 <!--begin::Badge-->
                 <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3"></span>
                 <!--end::Badge-->
@@ -16,7 +16,8 @@
             </div>
             <!--end::Heading-->
             <!--begin::Description-->
-            <div class="fw-bold fs-6 fs-lg-4 text-muted">{{ $product->price }}</div>
+            <div class="fw-bold fs-6 fs-lg-4 text-muted mb-3">RP. {{ $product->price }} | Stock {{ $product->stock }}
+            </div>
 
             @auth
                 <form action="{{ route('product.add') }}" method="get" style="display: inline-block">

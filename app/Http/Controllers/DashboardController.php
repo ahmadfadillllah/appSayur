@@ -84,11 +84,24 @@ class DashboardController extends Controller
             $cart    =   $user->cart()->where('product_id', '=', $product_id)->first();
 
             if ($cart instanceof Cart) {
+                $quantity   =   $cart->quantity;
+
+                $quantity   =   $cart->quantity + 1;
+
+                if ($quantity > $product->stock) {
+                    $quantity   =   $product->stock;
+                }
+
                 $cart->update([
                     'price'     =>  $cart->price,
-                    'quantity'  =>  $cart->quantity += 1,
+                    'quantity'  =>  $quantity,
                 ]);
             } else {
+
+                if ($qty > $product->stock) {
+                    $qty   =   $product->stock;
+                }
+
                 $cart['product_id'] =   $product_id;
                 $cart['name']       =   $product->name;
                 $cart['price']      =   $product->price;

@@ -204,6 +204,7 @@ class TransactionController extends Controller
                 'eci'           =>  $eci,
                 'approval_code' =>  $approval_code,
                 'status'        =>  $transaction,
+                'status_code'   =>  0,
                 'metode_pembayaran' => $type,
             ];
 
@@ -219,6 +220,18 @@ class TransactionController extends Controller
                 $data['status_code']    =   2;
             } else if ($transaction == 'cancel') {
                 $data['status_code']    =   2;
+            }
+
+            if ($data['status_code'] === 3) {
+                $order      =   $transaction->order;
+                $products   =   json_decode($order->products);
+                foreach ($products as $product_data) {
+                    $product = Product::find($product_data->id);
+                    $stock_left = $product->stock - $product_data->qty;
+                    $product->update([
+                        'stock' => $stock_left,
+                    ]);
+                }
             }
 
             $transaction    =   Transaction::where('order_id', $order_id)->first();

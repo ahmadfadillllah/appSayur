@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-use CloudMyn\Logger\Facade\Logger;
+// use CloudMyn\Logger\Facade\Logger;
 
 class Handler extends ExceptionHandler
 {
@@ -37,7 +37,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $throwable)
     {
-        Logger::log($throwable, auth()->user());
+        // Logger::log($throwable, auth()->user());
 
         parent::report($throwable);
     }

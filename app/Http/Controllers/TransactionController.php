@@ -176,12 +176,9 @@ class TransactionController extends Controller
 
             $notif = new \Midtrans\Notification();
 
-            $json_data          =   base64_decode($notif->order_id);
-            $data               =   json_decode($json_data);
-
             $transaction    =   $notif->transaction_status;
             $type           =   $notif->payment_type;
-            $order_id       =   $data['order_id'];
+            $order_id       =   base64_decode($notif->order_id);
             $fraud_status   =   $notif->fraud_status;
             $gross_amount   =   $notif->gross_amount;
             $currency       =   $notif->currency;

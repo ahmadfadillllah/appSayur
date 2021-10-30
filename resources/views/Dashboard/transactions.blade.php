@@ -197,12 +197,12 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">order id</th>
                                             <th scope="col">fullname</th>
                                             <th scope="col">alamat tujuan</th>
                                             <th scope="col">jumlah barang</th>
                                             <th scope="col">total transaksi</th>
                                             <th scope="col">onkir</th>
+                                            <th scope="col">order id</th>
                                             <th scope="col">metode pembayaran</th>
                                             <th scope="col">status</th>
                                             {{-- <th scope="col">action</th> --}}

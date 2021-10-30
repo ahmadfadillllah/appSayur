@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('transactions', 'TransactionController@transactions')->name('transactions');
 
     Route::post('/product/checkout', 'TransactionController@checkout')->name('product.checkout.beli');
+
+    Route::delete('/transaction/clear', 'TransactionController@clear');
 });
 
 Route::post('/transcation/notification/handling', 'TransactionController@notification')

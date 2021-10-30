@@ -97,7 +97,7 @@ class TransactionController extends Controller
 
         $snapToken      =   $this->midtrans($transaction, $order);
 
-        Cart::truncate();
+        $user->cart()->delete();
 
         return redirect()->route('product.pay', [$transaction->id, $snapToken]);
     }
@@ -297,6 +297,19 @@ class TransactionController extends Controller
         ];
 
         return \Midtrans\Snap::getSnapToken($params);
+    }
+
+    public function clear()
+    {
+        $user   =   (object) auth()->user();
+
+        $result = $user->transactions()->where('status_code', '!=', 1)->delete();
+
+        if (!$result) {
+            return redirect()->back()->with('fail', 'Gagal membersihkan transaksi');
+        } else {
+            return redirect()->back()->with('fail', 'Berhasil membersikan transaksi yang selesai');
+        }
     }
 
     private function validateCheckout()

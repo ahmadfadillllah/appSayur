@@ -185,7 +185,7 @@
                 {{-- begin::content --}}
                 <div class="row">
 
-                    <div class="col-md-8">
+                    <div class="col-md-12">
 
                         <div class="card text-dark bg-light">
                             <div class="card-body p-4">
@@ -203,7 +203,7 @@
                                             <th scope="col">onkir</th>
                                             <th scope="col">metode pembayaran</th>
                                             <th scope="col">status</th>
-                                            <th scope="col">action</th>
+                                            {{-- <th scope="col">action</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -219,9 +219,9 @@
                                                 <td>{{ $order->onkir }}</td>
                                                 <td>{{ $transaction->metode_pembayaran }}</td>
                                                 <td>{{ $transaction->status }}</td>
-                                                <td>
+                                                {{-- <td>
                                                     <a href="#" class="badge badge-danger">hapus</a>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -238,6 +238,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 {{-- end::content --}}
 

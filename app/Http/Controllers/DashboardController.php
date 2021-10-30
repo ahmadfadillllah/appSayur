@@ -91,7 +91,7 @@ class DashboardController extends Controller
             if ($cart instanceof Cart) {
                 $cart->update([
                     'price'     =>  $cart->price,
-                    'quantity'  =>  $cart->quantity + 1,
+                    'quantity'  =>  $cart->quantity += 1,
                 ]);
             } else {
                 $user->cart()->create($cart);

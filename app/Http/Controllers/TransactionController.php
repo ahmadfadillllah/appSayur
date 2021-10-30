@@ -115,6 +115,9 @@ class TransactionController extends Controller
 
         $transaction    =   Transaction::where('order_id', $order_id)->first();
 
+        // if ($transaction->status !== 'pending' or $transaction->status !== 'authorize')
+        //     return;
+
         $status_code    =   0;
 
         switch ($transaction_status) {

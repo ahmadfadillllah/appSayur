@@ -191,6 +191,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">gambar</th>
                                             <th scope="col">nama</th>
+                                            <th scope="col">penjual</th>
                                             <th scope="col">harga</th>
                                             <th scope="col">quantity</th>
                                             <th scope="col">action</th>
@@ -203,6 +204,7 @@
                                                 <td><img src="{{ $cart->product->getImage() }}" alt="image"
                                                         width="50px"></td>
                                                 <td>{{ $cart->name }}</td>
+                                                <td>{{ $cart->user->name }}</td>
                                                 <td>{{ $cart->price }}</td>
                                                 <td>{{ $cart->quantity }}</td>
                                                 <td>

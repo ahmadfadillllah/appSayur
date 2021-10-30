@@ -189,8 +189,8 @@
 
                         <div class="card text-dark bg-light">
                             <div class="card-body p-4">
-                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-shopping-cart"
-                                        style="font-size: 20px"></i> Keranjang</h3>
+                                <h3 class="card-title text-secondary text-bold"><i class="fa fa-money-bill"
+                                        style="font-size: 20px"></i> Daftar transaksi</h3>
                                 <hr class="mt-3">
 
                                 <table class="table table-striped text-center">
